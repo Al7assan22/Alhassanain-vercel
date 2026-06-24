@@ -1,0 +1,18 @@
+{
+  "name": "منصة الحَسَنَيْن للقرآن الكريم",
+  "short_name": "الحَسَنَيْن",
+  "description": "استمع للقرآن الكريم، اقرأ المصحف، احفظ، أوقات الصلاة، الأذكار، اتجاه القبلة.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "icons": [
+    { "src": "assets/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "categories": ["education", "books", "lifestyle"]
+}

@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ===== SEO Meta Tags ===== -->
+<meta name="description" content="منصة الحَسَنَيْن للقرآن الكريم - استمع للقرآن الكريم، اقرأ المصحف، احفظ القرآن، أوقات الصلاة، الأذكار والأدعية. أفضل منصة إسلامية متكاملة.">
+<meta name="keywords" content="قرآن كريم, استماع قرآن, حفظ قرآن, مصحف, أذكار, أدعية, أوقات صلاة, منصة إسلامية, الحسنين, quran online, quran recitation, islamic platform">
+<meta name="author" content="منصة الحَسَنَيْن">
+<meta name="robots" content="index, follow">
+<meta name="language" content="Arabic">
+<link rel="canonical" href="https://alhassanain-vercel.vercel.app/">
+
+<!-- Open Graph (مشاركة على السوشيال ميديا) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="منصة الحَسَنَيْن | القرآن الكريم">
+<meta property="og:description" content="استمع للقرآن الكريم، اقرأ المصحف، احفظ القرآن، وأوقات الصلاة - كل ما تحتاجه في مكان واحد">
+<meta property="og:url" content="https://alhassanain-vercel.vercel.app/">
+<meta property="og:locale" content="ar_EG">
+<meta property="og:site_name" content="منصة الحَسَنَيْن">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="منصة الحَسَنَيْن | القرآن الكريم">
+<meta name="twitter:description" content="استمع للقرآن الكريم، اقرأ المصحف، احفظ القرآن، وأوقات الصلاة">
+<!-- ========================= -->
+
+<title>الحَسَنَيْن | منصة القرآن الكريم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/memorize.css">
+<link rel="stylesheet" href="css/features.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- JSON-LD Structured Data (بيساعد جوجل يفهم الموقع) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "منصة الحَسَنَيْن",
+  "alternateName": "Al-Hassanein Platform",
+  "url": "https://alhassanain-vercel.vercel.app/",
+  "description": "منصة إسلامية متكاملة للقرآن الكريم - استماع، قراءة، حفظ، أذكار، وأوقات الصلاة",
+  "inLanguage": "ar",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://alhassanain-vercel.vercel.app/",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ===== SPLASH SCREEN ===== -->
+<div id="splash-screen">
+  <!-- Stars layer -->
+  <canvas id="splash-stars" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.7"></canvas>
+
+  <!-- Floating particles -->
+  <div class="splash-particles" id="splash-particles"></div>
+
+  <!-- Pulsing rings behind logo -->
+  <div class="splash-rings">
+    <div class="splash-glow-ring"></div>
+    <div class="splash-glow-ring"></div>
+    <div class="splash-glow-ring"></div>
+  </div>
+
+  <!-- Main content -->
+  <div class="splash-content">
+    <div class="splash-logo-icon">☾</div>
+    <div class="splash-title">الحَسَنَيْن</div>
+    <div class="splash-subtitle">منصة القرآن الكريم</div>
+    <div class="splash-divider"></div>
+    <div class="splash-ayah">﴿ إِنَّ هَـٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾</div>
+    <div class="splash-loader">
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+    </div>
+  </div>
+</div>
+<!-- ========================= -->
+<div class="app">
+
+<!-- HEADER -->
+<header>
+  <button class="hamburger-btn" id="hamburger-btn" onclick="toggleSidebar()" aria-label="فتح القائمة">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="logo" onclick="showScreen('home')">
+    <div class="logo-icon">☾</div>
+    <div>
+      <div class="logo-text">الحَسَنَيْن</div>
+      <div class="logo-sub">منصة القرآن الكريم</div>
+    </div>
+  </div>
+  <nav id="main-nav">
+    <div class="sidebar-header">
+      <div class="sidebar-title">القائمة</div>
+      <button class="sidebar-close" onclick="closeSidebar()" aria-label="إغلاق">✕</button>
+    </div>
+    <button class="nav-scroll-arrow nav-scroll-left" id="nav-scroll-left" onclick="scrollNav(-1)" aria-label="يسار">&#8249;</button>
+    <div class="nav-scroll-wrap" id="nav-scroll-wrap">
+    <button class="nav-btn active" onclick="showScreen('home')" id="nav-home"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span>الرئيسية</span></button>
+    <button class="nav-btn" onclick="showScreen('listen')" id="nav-listen"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a8 8 0 0 1 16 0"/><rect x="3" y="14" width="5" height="6" rx="1.5"/><rect x="16" y="14" width="5" height="6" rx="1.5"/></svg><span>استمع للقرآن</span></button>
+    <button class="nav-btn" onclick="showScreen('radio')" id="nav-radio"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16v9H4z"/><path d="M4 11l13-5"/><circle cx="8" cy="15.5" r="2"/><path d="M14 14h4M14 17h4"/></svg><span>إذاعة القرآن الكريم</span></button>
+    <button class="nav-btn" onclick="showScreen('original')" id="nav-original"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5z"/></svg><span>مصحف المدينة</span></button>
+    <button class="nav-btn" onclick="showScreen('quran')" id="nav-quran"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg><span>قراءة بالنص</span></button>
+    <button class="nav-btn" onclick="showScreen('memorize')" id="nav-memorize"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v1H7a2 2 0 0 0-2 2v3a7 7 0 1 0 14 0V8a2 2 0 0 0-2-2h-2V5a3 3 0 0 0-3-3z"/><path d="M9 18v2M15 18v2"/></svg><span>تحفيظ القرآن</span></button>
+    <button class="nav-btn" onclick="showScreen('prayer')" id="nav-prayer"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>أوقات الصلاة</span></button>
+    <button class="nav-btn" onclick="showScreen('azkar')" id="nav-azkar"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="4"/><path d="M12 4v2M4.9 7.1l1.4 1.4M19.1 7.1l-1.4 1.4M3 17h18"/></svg><span>أذكار الصباح والمساء</span></button>
+    <button class="nav-btn" onclick="showScreen('quran-duas')" id="nav-quran-duas"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a2 2 0 0 1 4 0v3"/><path d="M17 11V7a2 2 0 0 0-4 0v3"/><path d="M5 11h14v4a6 6 0 0 1-12 0z"/></svg><span>أدعية القرآن</span></button>
+    <button class="nav-btn" onclick="showScreen('tasbih')" id="nav-tasbih"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="4" r="1.5"/><circle cx="20" cy="12" r="1.5"/><circle cx="12" cy="20" r="1.5"/><circle cx="4" cy="12" r="1.5"/></svg><span>سبحة</span></button>
+    <button class="nav-btn" onclick="showScreen('qibla')" id="nav-qibla"><svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M9 9l6 6M15 9l-6 6"/></svg><span>اتجاه القبلة</span></button>
+    </div>
+    <button class="nav-scroll-arrow nav-scroll-right" id="nav-scroll-right" onclick="scrollNav(1)" aria-label="يمين">&#8250;</button>
+  <div class="sidebar-footer-credit">
+      تم بناء المنصة بواسطة <span>الحسن حجاج</span>
+      <small>لعلها تكون في ميزان حسناته</small>
+    </div>
+  </nav>
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div class="header-actions">
+    <!-- Auth Area -->
+    <div class="auth-header-area" id="auth-header-area">
+      <button class="auth-login-btn" id="auth-login-btn" onclick="openAuthModal('login')" title="تسجيل الدخول">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>دخول</span>
+      </button>
+      <div class="user-menu-wrapper" id="user-menu-wrapper" style="display:none">
+        <button class="user-avatar-btn" id="user-avatar-btn" onclick="toggleUserDropdown()">
+          <div class="user-avatar" id="user-avatar-display">?</div>
+          <span class="user-display-name" id="user-display-name">مستخدم</span>
+          <svg class="dropdown-arrow" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="dropdown-header">
+            <div class="dropdown-avatar-big" id="dropdown-avatar-big">?</div>
+            <div class="dropdown-user-info">
+              <div class="dropdown-username" id="dropdown-username-text">مستخدم</div>
+              <div class="dropdown-email" id="dropdown-email-text"></div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="openEditUsername()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            تعديل اسم المستخدم
+          </button>
+          <button class="dropdown-item" onclick="openChangePassword()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            تغيير كلمة المرور
+          </button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item logout-item" onclick="handleLogout()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            تسجيل الخروج
+          </button>
+        </div>
+      </div>
+    </div>
+    <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="تبديل الوضع" aria-label="تبديل الوضع"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HOME SCREEN -->
+  <div class="screen active" id="screen-home">
+    <div class="hero">
+      <div class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div class="hero-title">مرحباً بك في منصة <span style="color:#C89C33;-webkit-text-fill-color:#C89C33">الحَسَنَيْن</span></div>
+      <div class="hero-sub">اقرأ، استمع، تدبّر، وتعلّم القرآن الكريم</div>
+    </div>
+
+    <!-- Verse of the Day -->
+    <div class="verse-of-day">
+      <div class="vod-label">🌟 آية اليوم</div>
+      <div class="vod-arabic" id="vod-text">جارٍ التحميل...</div>
+      <div class="vod-ref" id="vod-ref"></div>
+      <div class="vod-tafsir" id="vod-tafsir"></div>
+    </div>
+
+    <!-- Stats — hidden for guests, shown for logged-in users -->
+    <div class="stats-row" id="home-stats-row">
+      <div class="stat-card">
+        <div class="stat-num stat-en" id="stat-verses">—</div>
+        <div class="stat-label">آية مقروءة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num stat-en" id="stat-surahs">—</div>
+        <div class="stat-label">سورة مكتملة</div>
+      </div>
+      <div class="stat-card" onclick="window.showScreen && window.showScreen('memorize')" style="cursor:pointer" title="انتقل لصفحة الحفظ">
+        <div class="stat-num stat-en" id="stat-memorized-home">—</div>
+        <div class="stat-label">آية محفوظة</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-num stat-en" id="stat-streak">—</div>
+        <div class="stat-label">يوم متتالي</div>
+      </div>
+    </div>
+    <!-- Login nudge shown when user is logged out -->
+    <div class="stats-login-nudge" id="stats-login-nudge" style="display:none">
+      <span>🔒</span> سجّل دخولك لتظهر إحصائياتك الشخصية
+      <button onclick="openAuthModal && openAuthModal('login')">دخول</button>
+    </div>
+
+    <!-- Streak -->
+    <div class="streak-bar">
+      <div class="streak-info">
+        <div class="streak-flame">🔥</div>
+        <div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:2px;">أيام القراءة المتتالية</div>
+          <div style="display:flex;align-items:baseline;gap:6px;">
+            <div class="streak-days" id="streak-count">0</div>
+            <div style="font-size:13px;color:var(--text-muted);">يوم</div>
+          </div>
+        </div>
+        <div id="streak-badge"></div>
+      </div>
+      <div class="streak-dots" id="streak-dots"></div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-grid">
+      <div class="quick-card" onclick="showScreen('original')">
+        <div class="icon">📖</div>
+        <h3>افتح مصحف المدينة</h3>
+        <p>المصحف الشريف كاملاً (٦٠٤ صفحة)</p>
+      </div>
+      <div class="quick-card" onclick="showScreen('prayer')">
+        <div class="icon">🕌</div>
+        <h3>أوقات الصلاة</h3>
+        <p>مواقيت الصلاة لموقعك الحالي</p>
+      </div>
+      <div class="quick-card highlight" onclick="showScreen('listen')">
+        <div class="icon">🎧</div>
+        <h3>استمع للقرآن الكريم</h3>
+        <p>٧ قراء مشاهير • تحميل السور</p>
+      </div>
+      <div class="quick-card" onclick="openLastRead()">
+        <div class="icon">📌</div>
+        <h3>آخر قراءة</h3>
+        <p id="last-read-label">لم تبدأ بعد</p>
+      </div>
+      <div class="quick-card" onclick="showScreen('ai')">
+        <div class="icon">🤖</div>
+        <h3>مساعد AI</h3>
+        <p>اسأل عن أي آية</p>
+      </div>
+      <div class="quick-card" onclick="showScreen('azkar')">
+        <div class="icon">🌅</div>
+        <h3>أذكار الصباح والمساء</h3>
+        <p>حصن المسلم اليومي</p>
+      </div>
+      <div class="quick-card" onclick="showScreen('quran-duas')">
+        <div class="icon">🤲</div>
+        <h3>أدعية القرآن</h3>
+        <p>كل الأدعية الواردة في القرآن</p>
+      </div>
+      <div class="quick-card" onclick="showScreen('tasbih')">
+        <div class="icon">📿</div>
+        <h3>سبحة إلكترونية</h3>
+        <p>اذكر الله بسهولة</p>
+      </div>
+      <div class="quick-card highlight" onclick="showScreen('memorize')">
+        <div class="icon">🧠</div>
+        <h3>تحفيظ القرآن</h3>
+        <p>تكرار، اختبار، وتتبّع التقدم</p>
+      </div>
+      <div class="quick-card highlight" onclick="showScreen('radio')">
+        <div class="icon">📻</div>
+        <h3>إذاعة القرآن من القاهرة</h3>
+        <p>بث مباشر • تلاوات وأحاديث وبرامج دينية</p>
+      </div>
+    </div>
+
+
+    <div class="built-by">تم بناء المنصة بواسطة <span style="color:#C89C33;font-weight:800">الحسن حجاج</span> <span style="color:var(--text-muted);font-size:11px;display:block;margin-top:4px">لعلها تكون في ميزان حسناته</span></div>
+  </div>
+
+  <!-- QURAN SCREEN -->
+  <div class="screen" id="screen-quran">
+    <!-- Overlay -->
+    <div class="surah-sidebar-overlay" id="surah-sidebar-overlay" onclick="closeSurahSidebar()"></div>
+
+    <div class="quran-layout">
+      <!-- Sidebar -->
+      <div class="surah-sidebar" id="surah-sidebar">
+        <!-- Floating close button top-left -->
+        <button class="surah-sidebar-close-float" onclick="closeSurahSidebar()" aria-label="إغلاق">✕</button>
+        <div class="sidebar-header">
+          <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;padding-left:4px">
+            <h3>قائمة السور (114)</h3>
+          </div>
+          <input type="text" class="search-input" placeholder="ابحث عن سورة..." oninput="filterSurahs(this.value)" id="surah-search">
+        </div>
+        <div class="surah-list" id="surah-list">
+          <div class="loading-verses"><div class="spinner"></div><div>جارٍ التحميل...</div></div>
+        </div>
+      </div>
+
+      <!-- Reading Area -->
+      <div class="reading-area" id="reading-area-main">
+        <div class="reading-header">
+          <div class="reading-title-wrap">
+            <button class="surah-sidebar-toggle" id="surah-sidebar-toggle" onclick="toggleSurahSidebar()" title="قائمة السور" aria-label="قائمة السور">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="reading-title">
+              <h2 id="reading-surah-name">اختر سورة</h2>
+              <p id="reading-surah-info"></p>
+            </div>
+          </div>
+          <div class="reading-controls">
+            <div class="font-controls">
+              <button class="font-btn" onclick="changeFontSize(-2)">أ-</button>
+              <span style="font-size:11px;color:var(--text-muted)" id="font-size-label">26</span>
+              <button class="font-btn" onclick="changeFontSize(2)">أ+</button>
+            </div>
+            <button class="ctrl-btn" onclick="toggleReadMode()" id="mode-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+              <span>مصحف</span>
+            </button>
+            <div class="tafsir-selector-wrap" id="tafsir-selector-wrap">
+              <button class="ctrl-btn tafsir-src-btn" onclick="toggleTafsirDropdown()" id="tafsir-src-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <span id="tafsir-src-label">ابن كثير</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="tafsir-dropdown" id="tafsir-dropdown">
+                <div class="tafsir-dd-item" data-src="ar.waseet" onclick="selectTafsirSource('ar.waseet','التفسير الوسيط')">
+                  <span class="tafsir-dd-check"></span> التفسير الوسيط
+                </div>
+                <div class="tafsir-dd-item" data-src="ar.muyassar" onclick="selectTafsirSource('ar.muyassar','التفسير الميسر')">
+                  <span class="tafsir-dd-check"></span> التفسير الميسر
+                </div>
+                <div class="tafsir-dd-item" data-src="ar.jalalayn" onclick="selectTafsirSource('ar.jalalayn','الجلالين')">
+                  <span class="tafsir-dd-check"></span> الجلالين
+                </div>
+              </div>
+            </div>
+            <button class="ctrl-btn" onclick="playCurrentSurah()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+              <span>استمع</span>
+            </button>
+          </div>
+        </div>
+        <div class="verses-container verse-mode-mushaf" id="verses-container">
+          <div class="empty-state">
+            <div class="empty-icon">📖</div>
+            <h3>اختر سورة من القائمة لتبدأ القراءة</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL MUSHAF READER v2 -->
+  <div class="screen" id="screen-original">
+    <!-- Mobile overlay -->
+    <div class="mshf-overlay" id="mshf-overlay" onclick="mshfClosePanel()"></div>
+
+    <div class="mshf-wrap" id="mshf-wrap">
+      <!-- Navigation Panel -->
+      <aside class="mshf-panel" id="mshf-panel">
+        <div class="mshf-panel-head">
+          <div class="mshf-panel-tabs">
+            <button class="mshf-ptab on" id="mptab-surah" onclick="mshfSwitchTab('surah')">السور</button>
+            <button class="mshf-ptab" id="mptab-juz" onclick="mshfSwitchTab('juz')">الأجزاء</button>
+            <button class="mshf-ptab" id="mptab-page" onclick="mshfSwitchTab('page')">الصفحات</button>
+          </div>
+          <input class="mshf-psearch" type="text" placeholder="🔍 ابحث..." id="mshf-search" oninput="mshfFilter(this.value)">
+        </div>
+        <div class="mshf-plist" id="mshf-plist"></div>
+        <div class="mshf-panel-foot">
+          <button class="mshf-lastbtn" onclick="mshfGoLastPage()">📌 آخر صفحة قرأتها</button>
+        </div>
+      </aside>
+
+      <!-- Reader -->
+      <div class="mshf-reader">
+        <!-- Top Toolbar -->
+        <div class="mshf-toolbar">
+          <button class="mshf-tbtn" onclick="mshfTogglePanel()" title="القائمة">☰</button>
+          <div class="mshf-pinfo" id="mshf-pinfo">المصحف الشريف</div>
+          <input class="mshf-pinput" type="number" min="1" max="604" id="mshf-pinput" title="انتقل لصفحة" onchange="mshfGoPage(this.value)" placeholder="ص">
+
+          <button class="mshf-tbtn accent" onclick="mshfPlayPage()" title="استمع للصفحة">🎧</button>
+          <button class="mshf-tbtn on" id="mshf-bm-btn" onclick="mshfToggleBookmark()" title="حفظ الصفحة">🔖</button>
+          <!-- (PDF / Share / Dual buttons removed by user request) -->
+          <button class="mshf-tbtn wide" onclick="mshfCycleMode()" id="mshf-mode-btn" title="وضع العرض">🌙 ليلي</button>
+          <button class="mshf-tbtn" onclick="mshfFullscreen()" title="ملء الشاشة">⛶</button>
+        </div>
+
+        <!-- Page Stage -->
+        <div class="mshf-stage" id="mshf-stage" ondblclick="mshfFullscreen()">
+          <!-- Loading overlay -->
+          <div class="mshf-loading hidden" id="mshf-loading">
+            <div class="spinner"></div>
+            <div>جارٍ تحميل الصفحة...</div>
+          </div>
+          <!-- Book wrap (animated) -->
+          <div class="mshf-book-wrap" id="mshf-book-wrap">
+            <div class="mshf-page-box" id="mshf-page-box">
+              <div class="mshf-bm-dot" id="mshf-bm-dot"></div>
+              <img class="mshf-page-img" id="mshf-page-img" alt="صفحة المصحف" draggable="false">
+            </div>
+            <div class="mshf-page-box mshf-page-box-dual" id="mshf-page-box-dual" style="display:none">
+              <img class="mshf-page-img" id="mshf-page-img-dual" alt="صفحة المصحف المجاورة" draggable="false">
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom navigation bar -->
+        <div class="mshf-bottombar">
+          <button class="mshf-navbtn" onclick="mshfPrev()" title="الصفحة السابقة" aria-label="السابقة">›</button>
+          <div class="mshf-slider-wrap">
+            <span class="mshf-slider-label" style="color:var(--gold);font-weight:900" id="mshf-pg-lbl">١</span>
+            <input class="mshf-slider" type="range" min="1" max="604" value="1" id="mshf-slider" oninput="mshfOnSlider(this.value)">
+            <span class="mshf-slider-label">٦٠٤</span>
+          </div>
+          <button class="mshf-navbtn" onclick="mshfNext()" title="الصفحة التالية" aria-label="التالية">‹</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PRAYER TIMES SCREEN -->
+  <div class="screen" id="screen-prayer">
+    <div class="screen-header">
+      <div class="screen-title">🕌 أوقات الصلاة</div>
+      <button class="goal-btn" style="width:auto;padding:9px 18px" onclick="detectLocation()">📍 تحديد الموقع</button>
+    </div>
+    <div id="prayer-location-info" style="text-align:center;color:var(--text-muted);font-size:13px;margin-bottom:18px"></div>
+    <div id="prayer-error" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:16px;text-align:center;color:#ef4444;margin-bottom:18px"></div>
+    <div id="prayer-loading" style="text-align:center;padding:40px;color:var(--text-muted)"><div class="spinner" style="margin:0 auto 14px"></div>جارٍ تحديد موقعك...</div>
+    <div id="prayer-content" style="display:none">
+      <div class="prayer-date-bar" id="prayer-date-bar"></div>
+      <div class="prayer-grid" id="prayer-grid"></div>
+      <div class="prayer-next-card" id="prayer-next-card"></div>
+      <div style="margin-top:24px">
+        <div class="screen-title" style="font-size:16px;margin-bottom:14px">📅 أوقات الأيام القادمة</div>
+        <div id="prayer-week-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH SCREEN -->
+  <div class="screen" id="screen-search">
+    <div class="search-hero">
+      <h2>🔍 البحث في القرآن الكريم</h2>
+      <p>ابحث بالكلمة أو الموضوع</p>
+      <div class="search-big">
+        <input type="text" id="search-input" placeholder="اكتب كلمة أو موضوعاً..." onkeydown="if(event.key==='Enter')doSearch()">
+        <button onclick="doSearch()">بحث</button>
+      </div>
+      <div class="topic-tags">
+        <span class="topic-tag" onclick="searchTopic('الصبر')">الصبر</span>
+        <span class="topic-tag" onclick="searchTopic('الصلاة')">الصلاة</span>
+        <span class="topic-tag" onclick="searchTopic('الرزق')">الرزق</span>
+        <span class="topic-tag" onclick="searchTopic('التوبة')">التوبة</span>
+        <span class="topic-tag" onclick="searchTopic('الجنة')">الجنة</span>
+        <span class="topic-tag" onclick="searchTopic('الرحمة')">الرحمة</span>
+        <span class="topic-tag" onclick="searchTopic('الشكر')">الشكر</span>
+        <span class="topic-tag" onclick="searchTopic('التوكل')">التوكل</span>
+      </div>
+    </div>
+    <div id="search-results" class="search-results"></div>
+  </div>
+
+  <!-- GOALS SCREEN -->
+  <div class="screen" id="screen-goals">
+    <div class="screen-header">
+      <div class="screen-title">🎯 الأهداف والخطط</div>
+      <button class="goal-btn" style="width:auto;padding:9px 18px" onclick="openGoalModal()">+ هدف جديد</button>
+    </div>
+    <div class="goals-grid" id="goals-grid">
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon">🎯</div>
+        <h3>لا توجد أهداف بعد</h3>
+        <p style="color:var(--text-muted);margin-top:8px">اضغط على "هدف جديد" لتبدأ رحلتك</p>
+      </div>
+    </div>
+    <!-- Daily Plan -->
+    <div id="daily-plan-section" style="display:none">
+      <div class="screen-title" style="font-size:18px;margin-bottom:16px">📅 خطتك اليومية</div>
+      <div id="daily-plan-content" class="goals-grid"></div>
+    </div>
+  </div>
+
+
+
+  <!-- AZKAR SCREEN - FULL COMPREHENSIVE VERSION -->
+  <div class="screen" id="screen-azkar">
+    <div class="screen-header">
+      <div class="screen-title">🌅 أذكار الصباح والمساء</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="goal-btn" style="width:auto;padding:8px 14px;background:rgba(201,168,76,0.12);border:1px solid var(--border-gold);color:var(--gold)" onclick="mshfAzkarResetAll()">🔄 إعادة الكل</button>
+        <div style="font-size:12px;color:var(--text-muted);font-family:'Cairo',sans-serif" id="azkar-done-label"></div>
+      </div>
+    </div>
+    <div class="azkar-tabs">
+      <button class="azkar-tab active" id="azkar-tab-morning" onclick="renderAzkar('morning')">☀️ أذكار الصباح</button>
+      <button class="azkar-tab" id="azkar-tab-evening" onclick="renderAzkar('evening')">🌙 أذكار المساء</button>
+    </div>
+    <div class="content-grid" id="azkar-grid"></div>
+  </div>
+
+
+
+  <!-- TASBIH SCREEN -->
+  <div class="screen" id="screen-tasbih">
+    <div class="screen-header" style="border:none;padding:0;margin:0">
+      <div></div>
+    </div>
+    <div class="tasbih-wrap">
+      <div class="tasbih-panel">
+        <!-- Hidden legacy elements (kept so existing JS keeps working) -->
+        <div class="tasbih-phrase" id="tasbih-phrase" style="display:none">سُبْحَانَ اللَّهِ</div>
+        <div class="tasbih-count" id="tasbih-count" style="display:none">0</div>
+        <div class="tasbih-target" id="tasbih-target" style="display:none">الهدف: 33</div>
+        <button class="tasbih-main-btn" id="tasbih-main-btn-legacy" onclick="incrementTasbih()" style="display:none">اذكر</button>
+
+        <!-- New visible UI -->
+        <div class="tasbih-phrase" id="tasbih-phrase-display">سُبْحَانَ اللَّهِ</div>
+        <div class="tasbih-select-wrap">
+          <select id="tasbih-phrase-select" onchange="setTasbihPhrase(this.value)">
+            <option value="سُبْحَانَ اللَّهِ">سُبْحَانَ اللَّه</option>
+            <option value="الْحَمْدُ لِلَّهِ">الْحَمْدُ لِلَّه</option>
+            <option value="اللَّهُ أَكْبَرُ">اللَّهُ أَكْبَر</option>
+            <option value="لَا إِلَٰهَ إِلَّا اللَّهُ">لَا إِلَٰهَ إِلَّا اللَّه</option>
+            <option value="أَسْتَغْفِرُ اللَّهَ">أَسْتَغْفِرُ اللَّه</option>
+            <option value="اللَّهُمَّ صَلِّ عَلَى مُحَمَّد">اللَّهُمَّ صَلِّ عَلَى مُحَمَّد</option>
+          </select>
+        </div>
+        <button class="tasbih-bead" onclick="incrementTasbih()" aria-label="اذكر">
+          <div class="tb-count" id="tb-count">0</div>
+          <div class="tb-progress" id="tb-progress">33 / 0</div>
+        </button>
+        <div class="tasbih-targets">
+          <span class="tt-label">الهدف:</span>
+          <button class="tt-btn active" data-target="33"  onclick="setTasbihTarget(33)">33</button>
+          <button class="tt-btn"        data-target="99"  onclick="setTasbihTarget(99)">99</button>
+          <button class="tt-btn"        data-target="100" onclick="setTasbihTarget(100)">100</button>
+          <button class="tt-btn tt-reset" onclick="resetTasbih()" title="تصفير">↺</button>
+          <button class="tt-btn tt-reset" onclick="resetTasbih()">تصفير</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QURANIC DUAS SCREEN -->
+  <div class="screen" id="screen-quran-duas">
+    <div class="screen-header">
+      <div class="screen-title">📜 الأدعية الواردة في القرآن الكريم</div>
+    </div>
+    <p style="color:var(--text-muted);margin-bottom:18px;font-size:14px">جميع الأدعية التي وردت في كتاب الله، مع ذكر السورة ورقم الآية.</p>
+    <div class="content-grid" id="quran-duas-grid"></div>
+  </div>
+
+
+  <!-- LISTEN SCREEN -->
+  <div class="screen" id="screen-listen">
+    <div class="listen-hero">
+      <div class="lh-bg"></div>
+      <div class="lh-content">
+        <div class="lh-badge">🎧 استمع للقرآن الكريم</div>
+        <h1>تلاوات بأصوات أشهر القراء</h1>
+        <p>اختر القارئ ثم استمع للسورة كاملة أو حمّلها للاستماع دون اتصال</p>
+      </div>
+    </div>
+
+    <div class="listen-section-title">👤 اختر القارئ</div>
+    <div class="reciter-row" id="listen-reciters"></div>
+
+    <div class="listen-toolbar">
+      <div class="listen-section-title" style="margin:0">📚 السور (114)</div>
+      <input type="text" class="listen-search" placeholder="🔍 ابحث عن سورة..." oninput="listenFilter(this.value)">
+    </div>
+    <div class="listen-grid" id="listen-grid">
+      <div class="empty-state" style="grid-column:1/-1"><div class="spinner"></div><h3>جارٍ التحميل...</h3></div>
+    </div>
+  </div>
+
+  <!-- AI SCREEN -->
+  <div class="screen" id="screen-ai">
+    <div class="screen-title" style="margin-bottom:16px">🤖 المساعد القرآني الذكي</div>
+    <div class="ai-chat">
+      <div class="ai-suggestions">
+        <span class="ai-sug" onclick="askAI('ما معنى آية الكرسي؟')">ما معنى آية الكرسي؟</span>
+        <span class="ai-sug" onclick="askAI('أعطني آيات عن الصبر')">آيات عن الصبر</span>
+        <span class="ai-sug" onclick="askAI('كيف أطبق سورة الفاتحة في حياتي؟')">تطبيق سورة الفاتحة</span>
+        <span class="ai-sug" onclick="askAI('ما هي فضائل قراءة القرآن؟')">فضائل القراءة</span>
+      </div>
+      <div class="ai-messages" id="ai-messages">
+        <div class="ai-msg">
+          <div class="ai-avatar bot">☾</div>
+          <div class="ai-bubble">
+            السلام عليكم 🌙<br>
+            أنا مساعدك القرآني الذكي. يمكنك سؤالي عن أي آية كريمة، أو طلب التفسير، أو البحث عن موضوع معين في القرآن الكريم.
+          </div>
+        </div>
+      </div>
+      <div class="ai-input-row">
+        <input type="text" id="ai-input" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key==='Enter')sendAI()">
+        <button class="ai-send-btn" onclick="sendAI()">➤</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ============ QIBLA SCREEN ============ -->
+  <div class="screen" id="screen-qibla">
+    <div class="screen-header">
+      <div class="screen-title">🧭 اتجاه القبلة</div>
+    </div>
+    <div class="qibla-wrap">
+      <div class="qibla-card">
+        <div class="qibla-compass">
+          <div class="qibla-mark n">ش</div>
+          <div class="qibla-mark s">ج</div>
+          <div class="qibla-mark e">شر</div>
+          <div class="qibla-mark w">غ</div>
+          <div class="qibla-rose" id="qibla-rose">
+            <div class="qibla-needle"></div>
+            <div class="qibla-kaaba" title="الكعبة المشرّفة">🕋</div>
+          </div>
+          <div class="qibla-center"></div>
+        </div>
+        <div class="qibla-info">
+          الزاوية إلى القبلة: <b id="qibla-angle">—</b>
+          <div style="margin-top:4px;opacity:.8;font-size:14px">المسافة إلى مكة: <span id="qibla-dist">—</span></div>
+        </div>
+        <div class="qibla-actions">
+          <button class="qibla-btn" onclick="qiblaRequestLocation()">📍 تحديد موقعي</button>
+          <button class="qibla-btn ghost" onclick="qiblaEnableCompass()">🧭 تفعيل البوصلة</button>
+        </div>
+        <div class="qibla-status" id="qibla-status">اضغط "تحديد موقعي" ثم "تفعيل البوصلة" (مطلوب على الهواتف).</div>
+        <div style="margin-top:14px;font-size:13px;color:#9fb3d1;line-height:1.8">
+          • السهم الذهبي يشير إلى الكعبة المشرّفة 🕋<br>
+          • وجّه أعلى الجهاز ناحية السهم لتجد القبلة.<br>
+          • للحصول على دقة أعلى استخدم الجهاز في مكان مكشوف.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MEMORIZE SCREEN ============ -->
+  <div class="screen" id="screen-memorize">
+    <div class="memo-hero">
+      <div class="memo-hero-badge">🧠 ميزة التحفيظ الجديدة</div>
+      <h1>احفظ القرآن الكريم بطريقة منظمة</h1>
+      <p>اختر السورة والآيات، استمع، كرّر، اختبر نفسك، وتابع تقدّمك خطوة بخطوة بإذن الله.</p>
+    </div>
+
+    <!-- Top stats -->
+    <div class="memo-stats">
+      <div class="memo-stat"><div class="ms-num" id="memo-stat-verses">0</div><div class="ms-label">آية محفوظة</div></div>
+      <div class="memo-stat"><div class="ms-num" id="memo-stat-surahs">0</div><div class="ms-label">سورة مكتملة</div></div>
+      <div class="memo-stat"><div class="ms-num" id="memo-stat-sessions">0</div><div class="ms-label">جلسة حفظ</div></div>
+
+    </div>
+
+    <!-- Setup -->
+    <div class="memo-setup">
+      <div class="memo-section-title">⚙️ إعداد جلسة الحفظ</div>
+      <div class="memo-row">
+        <div class="memo-field">
+          <label>السورة</label>
+          <select id="memo-surah-select"><option>جارٍ التحميل...</option></select>
+        </div>
+        <div class="memo-field">
+          <label>من آية</label>
+          <input type="number" id="memo-from" min="1" value="1">
+        </div>
+        <div class="memo-field">
+          <label>إلى آية</label>
+          <input type="number" id="memo-to" min="1" value="7">
+        </div>
+      </div>
+
+      <div class="memo-section-title" style="margin-top:8px">🎙️ القارئ</div>
+      <div class="memo-reciters" id="memo-reciter-chips"></div>
+
+      <div class="memo-row">
+        <div class="memo-field">
+          <label>عدد مرات تكرار الآية</label>
+          <input type="number" id="memo-repeats" min="1" max="50" value="5">
+        </div>
+        <div class="memo-field">
+          <label>مدة الجلسة (بالدقائق)</label>
+          <input type="number" id="memo-session-min" min="1" max="120" value="15">
+        </div>
+        <div class="memo-field" style="justify-content:flex-end">
+          <label style="opacity:0">.</label>
+          <button class="memo-load-btn" id="memo-load-btn" type="button">🚀 ابدأ الحفظ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Session Timer -->
+    <div class="memo-timer-card">
+      <div class="memo-timer-display" id="memo-timer-display">15:00</div>
+      <div class="memo-timer-info">
+        <div class="lbl">⏱️ مؤقت الجلسة</div>
+        <div class="sub" id="memo-timer-sub">جلسة غير نشطة</div>
+      </div>
+      <div class="memo-timer-actions">
+        <button class="memo-tool-btn" id="memo-session-start" type="button">▶ بدء الجلسة</button>
+        <button class="memo-tool-btn danger" id="memo-session-stop" type="button" style="display:none">■ إيقاف</button>
+      </div>
+    </div>
+
+    <!-- Workspace -->
+    <div class="memo-workspace" id="memo-workspace">
+      <div class="memo-toolbar">
+        <button class="memo-tool-btn" id="memo-play-btn" type="button">▶ تشغيل التلاوة</button>
+        <button class="memo-tool-btn" id="memo-prev-btn" type="button">⏮ السابقة</button>
+        <button class="memo-tool-btn" id="memo-next-btn" type="button">⏭ التالية</button>
+        <button class="memo-tool-btn" id="memo-auto-btn" type="button">🔁 تكرار تلقائي</button>
+        <button class="memo-tool-btn" id="memo-hide-btn" type="button">🙈 إخفاء النص</button>
+        <button class="memo-tool-btn" id="memo-test-btn" type="button">🧠 وضع الاختبار</button>
+        <div class="memo-current-info" id="memo-current-info">—</div>
+      </div>
+
+      <div class="memo-verses" id="memo-verses">
+        <div class="memo-loading">— اختر السورة والآيات ثم اضغط "ابدأ الحفظ" —</div>
+      </div>
+
+      <div class="memo-progress-wrap">
+        <div class="memo-progress-label">
+          <span id="memo-progress-label-text">٠ / ٠ آية</span>
+          <span id="memo-progress-pct">0%</span>
+        </div>
+        <div class="memo-progress-bar"><div class="memo-progress-fill" id="memo-progress-fill"></div></div>
+      </div>
+
+      <div class="memo-mark-row">
+        <button class="memo-tool-btn" id="memo-mark-one" type="button">✅ علِّم الآية الحالية كمحفوظة</button>
+        <button class="memo-tool-btn" id="memo-mark-all" type="button">📚 علِّم الكل كمحفوظ</button>
+        <button class="memo-tool-btn danger" id="memo-unmark" type="button">↩ إلغاء حفظ الآية الحالية</button>
+      </div>
+    </div>
+
+    <!-- Overall Progress -->
+    <div class="memo-progress-section">
+      <div class="memo-section-title">📊 تقدّمك في الحفظ</div>
+      <div class="memo-surah-list" id="memo-surah-list">
+        <div class="memo-empty-progress">📖 لم تبدأ الحفظ بعد. اختر سورة من الأعلى للبداية.</div>
+      </div>
+    </div>
+  </div>
+
+    <!-- RADIO SCREEN -->
+    <div class="screen" id="screen-radio">
+      <div class="radio-hero">
+        <div class="radio-hero-badge">📻 بث مباشر</div>
+        <h1>إذاعة القرآن الكريم</h1>
+        <p>بثٌّ مباشر على مدار الساعة من القاهرة ومكة المكرمة والمدينة المنورة.</p>
+      </div>
+
+      <div class="radio-player-card">
+        <div class="radio-cover">
+          <div class="radio-cover-inner" id="radio-cover-inner">
+            <div class="radio-cover-emoji" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 11h16v9H4z"/>
+                <path d="M4 11l13-5"/>
+                <circle cx="8" cy="15.5" r="2.2"/>
+                <path d="M14 14h4M14 17h4"/>
+                <path d="M17 6v3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="radio-live-badge" id="radio-live-badge">
+            <span class="radio-live-dot"></span>
+            <span id="radio-live-text">غير متصل</span>
+          </div>
+        </div>
+
+        <div class="radio-station-info">
+          <div class="radio-station-name" id="radio-station-name">إذاعة القرآن الكريم</div>
+          <div class="radio-station-sub" id="radio-station-sub">القاهرة — جمهورية مصر العربية</div>
+        </div>
+
+        <div class="radio-controls">
+          <button class="radio-btn-main" id="radio-toggle-btn" type="button" onclick="toggleRadio()" aria-label="تشغيل/إيقاف">
+            <span id="radio-toggle-icon">▶</span>
+          </button>
+        </div>
+
+        <div class="radio-volume-row">
+          <button class="radio-vol-btn" type="button" onclick="toggleRadioMute()" id="radio-mute-btn" aria-label="كتم">🔊</button>
+          <input type="range" id="radio-volume" min="0" max="100" value="80" class="radio-volume-slider"
+            oninput="setRadioVolume(this.value)" aria-label="مستوى الصوت">
+          <span class="radio-vol-value" id="radio-vol-value">80%</span>
+        </div>
+
+        <div class="radio-status" id="radio-status">جاهز للتشغيل — اضغط زر التشغيل للبدء</div>
+      </div>
+
+      <div class="radio-stations">
+        <div class="memo-section-title">📡 اختر المحطة</div>
+        <div class="radio-station-grid" id="radio-station-grid"></div>
+      </div>
+
+      <audio id="radio-audio" preload="none" crossorigin="anonymous"
+        controlsList="nodownload noplaybackrate noremoteplayback"
+        disableremoteplayback
+        style="display:none !important;width:0;height:0;position:absolute;left:-9999px;"
+        oncontextmenu="return false;"></audio>
+    </div>
+
+</main>
+</div>
+
+<!-- AUDIO PLAYER -->
+<div class="audio-player" id="audio-player">
+  <!-- Row 1: info + reciter selector -->
+  <div class="audio-info">
+    <div class="audio-text">
+      <div class="audio-surah" id="audio-surah-name">—</div>
+      <div class="audio-verse" id="audio-verse-info">—</div>
+    </div>
+    <div class="audio-reciter-wrap">
+      <select class="audio-reciter-select" id="reciter-select" onchange="changeReciterBar(this.value)" title="اختر القارئ">
+        <option value="minshawi">المنشاوي</option>
+        <option value="abdulbasit">عبد الباسط</option>
+        <option value="husary">الحصري</option>
+        <option value="alafasy">العفاسي</option>
+        <option value="dossari">الدوسري</option>
+        <option value="qatami">القطامي</option>
+        <option value="sudais">السديس</option>
+
+      </select>
+    </div>
+    <button class="a-btn close-btn" onclick="closePlayer()" title="إغلاق">✕</button>
+  </div>
+  <!-- Row 2: progress bar -->
+  <div class="audio-progress">
+    <span class="a-time" id="audio-current-time">0:00</span>
+    <input type="range" id="audio-seek" min="0" max="100" value="0" step="0.1" class="audio-seek"
+      oninput="(function(v){var a=document.getElementById('audio-el');if(a&&a.duration)a.currentTime=(v/100)*a.duration;})(this.value)">
+    <span class="a-time" id="audio-duration-time">0:00</span>
+  </div>
+  <!-- Row 3: controls -->
+  <div class="audio-controls">
+    <!-- Skip prev -->
+    <button class="a-btn" onclick="barSkipPrev()" title="السابقة">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><polygon points="19,20 9,12 19,4"/><rect x="5" y="4" width="3" height="16" rx="1"/></svg>
+    </button>
+    <!-- Play/Pause -->
+    <button class="play-btn" onclick="togglePlay()" id="play-btn">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+    </button>
+    <!-- Skip next -->
+    <button class="a-btn" onclick="barSkipNext()" title="التالية">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><polygon points="5,20 15,12 5,4"/><rect x="16" y="4" width="3" height="16" rx="1"/></svg>
+    </button>
+    <!-- Repeat -->
+    <button class="a-btn repeat-btn" onclick="toggleRepeat()" id="repeat-btn" title="إعادة">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+    </button>
+    <!-- Auto-play -->
+    <button class="a-btn auto-btn" onclick="toggleAuto()" id="auto-btn" title="تشغيل تلقائي">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+    </button>
+    <!-- Volume -->
+    <div class="volume-wrap">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="100"
+        oninput="(function(v){var a=document.getElementById('audio-el');if(a)a.volume=v/100;})(this.value)" title="مستوى الصوت">
+    </div>
+  </div>
+  <audio id="audio-el" onended="onAudioEnd()"
+    ontimeupdate="(function(a){var s=document.getElementById('audio-seek');if(s&&a.duration){s.value=(a.currentTime/a.duration)*100;}var fmt=function(t){var m=Math.floor(t/60),sec=Math.floor(t%60);return m+':'+(sec<10?'0':'')+sec;};var ct=document.getElementById('audio-current-time');var dt=document.getElementById('audio-duration-time');if(ct)ct.textContent=fmt(a.currentTime);if(dt&&a.duration)dt.textContent=fmt(a.duration);})(this)">
+  </audio>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- GOAL MODAL -->
+<div class="modal-overlay" id="goal-modal">
+  <div class="modal">
+    <h3>🎯 اختر هدفك</h3>
+    <div class="goal-options">
+      <div class="goal-option" onclick="selectGoalOption('khatma30')">
+        <div class="go-icon">📚</div>
+        <div>
+          <h4>ختم القرآن في 30 يوم</h4>
+          <p>~208 آية يومياً</p>
+        </div>
+      </div>
+      <div class="goal-option" onclick="selectGoalOption('khatma60')">
+        <div class="go-icon">📖</div>
+        <div>
+          <h4>ختم القرآن في 60 يوم</h4>
+          <p>~104 آية يومياً</p>
+        </div>
+      </div>
+      <div class="goal-option" onclick="selectGoalOption('amma')">
+        <div class="go-icon">🧠</div>
+        <div>
+          <h4>حفظ جزء عم</h4>
+          <p>37 سورة • 564 آية</p>
+        </div>
+      </div>
+      <div class="goal-option" onclick="selectGoalOption('daily10')">
+        <div class="go-icon">⚡</div>
+        <div>
+          <h4>ورد يومي — 10 آيات</h4>
+          <p>أقل ما يكفي للمداومة</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-buttons">
+      <button class="modal-btn secondary" onclick="closeGoalModal()">إلغاء</button>
+      <button class="modal-btn primary" onclick="confirmGoal()">ابدأ الآن ✓</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== AUTH MODALS ===== -->
+<!-- Main Auth Modal (Login / Signup / Forgot) -->
+<div class="auth-overlay" id="auth-overlay" onclick="closeAuthOnOverlay(event)">
+  <div class="auth-modal" id="auth-modal">
+    <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+    
+    <!-- LOGIN PANEL -->
+    <div class="auth-panel" id="panel-login">
+      <div class="auth-logo">☾</div>
+      <h2 class="auth-title">مرحباً بعودتك</h2>
+      <p class="auth-sub">سجّل دخولك للاستمرار في رحلتك مع القرآن</p>
+      <div class="auth-field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="login-email" placeholder="example@email.com" dir="ltr" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>كلمة المرور</label>
+        <div class="password-wrapper">
+          <input type="password" id="login-password" placeholder="••••••••" dir="ltr" autocomplete="current-password">
+          <button class="toggle-eye" onclick="togglePasswordVis('login-password', this)" type="button">👁</button>
+        </div>
+      </div>
+      <button class="auth-forgot-link" onclick="switchPanel('forgot')">نسيت كلمة المرور؟</button>
+      <div class="auth-error" id="login-error"></div>
+      <button class="auth-btn primary" id="login-submit-btn" onclick="handleLogin()">
+        <span class="btn-text">تسجيل الدخول</span>
+        <span class="btn-loader" style="display:none">⏳</span>
+      </button>
+      <p class="auth-switch">ليس لديك حساب؟ <button onclick="switchPanel('signup')">إنشاء حساب</button></p>
+    </div>
+
+    <!-- SIGNUP PANEL -->
+    <div class="auth-panel" id="panel-signup" style="display:none">
+      <div class="auth-logo">☾</div>
+      <h2 class="auth-title">إنشاء حساب جديد</h2>
+      <p class="auth-sub">انضم إلى مجتمع القرآن الكريم</p>
+      <div class="auth-field">
+        <label>الاسم الأول</label>
+        <input type="text" id="signup-firstname" placeholder="الاسم الأول" autocomplete="given-name">
+      </div>
+      <div class="auth-field">
+        <label>الاسم الأخير</label>
+        <input type="text" id="signup-lastname" placeholder="الاسم الأخير" autocomplete="family-name">
+      </div>
+      <div class="auth-field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="signup-email" placeholder="example@email.com" dir="ltr" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>كلمة المرور</label>
+        <div class="password-wrapper">
+          <input type="password" id="signup-password" placeholder="8 أحرف على الأقل" dir="ltr" autocomplete="new-password">
+          <button class="toggle-eye" onclick="togglePasswordVis('signup-password', this)" type="button">👁</button>
+        </div>
+        <div class="password-strength" id="pass-strength-bar">
+          <div class="strength-fill" id="strength-fill"></div>
+        </div>
+        <div class="strength-label" id="strength-label"></div>
+      </div>
+      <div class="auth-field">
+        <label>تأكيد كلمة المرور</label>
+        <div class="password-wrapper">
+          <input type="password" id="signup-confirm" placeholder="أعد إدخال كلمة المرور" dir="ltr" autocomplete="new-password">
+          <button class="toggle-eye" onclick="togglePasswordVis('signup-confirm', this)" type="button">👁</button>
+        </div>
+      </div>
+      <div class="auth-error" id="signup-error"></div>
+      <button class="auth-btn primary" id="signup-submit-btn" onclick="handleSignup()">
+        <span class="btn-text">إنشاء الحساب</span>
+        <span class="btn-loader" style="display:none">⏳</span>
+      </button>
+      <p class="auth-switch">لديك حساب بالفعل؟ <button onclick="switchPanel('login')">تسجيل الدخول</button></p>
+    </div>
+
+    <!-- FORGOT PASSWORD PANEL -->
+    <div class="auth-panel" id="panel-forgot" style="display:none">
+      <div class="auth-logo">🔑</div>
+      <h2 class="auth-title">نسيت كلمة المرور؟</h2>
+      <p class="auth-sub">أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين</p>
+      <div class="auth-field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="forgot-email" placeholder="example@email.com" dir="ltr" autocomplete="email">
+      </div>
+      <div class="auth-error" id="forgot-error"></div>
+      <div class="auth-success" id="forgot-success"></div>
+      <button class="auth-btn primary" id="forgot-submit-btn" onclick="handleForgotPassword()">
+        <span class="btn-text">إرسال رابط الاسترداد</span>
+        <span class="btn-loader" style="display:none">⏳</span>
+      </button>
+      <p class="auth-switch"><button onclick="switchPanel('login')">← العودة لتسجيل الدخول</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Username Modal -->
+<div class="auth-overlay" id="edit-username-overlay" onclick="closeEditUsernameOnOverlay(event)">
+  <div class="auth-modal small-modal">
+    <button class="auth-modal-close" onclick="closeEditUsername()">✕</button>
+    <div class="auth-logo">✏️</div>
+    <h2 class="auth-title">تعديل اسم المستخدم</h2>
+    <div class="auth-field">
+      <label>اسم المستخدم الجديد</label>
+      <input type="text" id="edit-username-input" placeholder="اسمك الجديد">
+    </div>
+    <div class="auth-error" id="edit-username-error"></div>
+    <button class="auth-btn primary" id="edit-username-btn" onclick="handleEditUsername()">
+      <span class="btn-text">حفظ التغييرات</span>
+      <span class="btn-loader" style="display:none">⏳</span>
+    </button>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="auth-overlay" id="change-pass-overlay" onclick="closeChangePassOnOverlay(event)">
+  <div class="auth-modal small-modal">
+    <button class="auth-modal-close" onclick="closeChangePassword()">✕</button>
+    <div class="auth-logo">🔐</div>
+    <h2 class="auth-title">تغيير كلمة المرور</h2>
+    <div class="auth-field">
+      <label>كلمة المرور الحالية</label>
+      <div class="password-wrapper">
+        <input type="password" id="current-password-input" placeholder="••••••••" dir="ltr">
+        <button class="toggle-eye" onclick="togglePasswordVis('current-password-input', this)" type="button">👁</button>
+      </div>
+    </div>
+    <div class="auth-field">
+      <label>كلمة المرور الجديدة</label>
+      <div class="password-wrapper">
+        <input type="password" id="new-password-input" placeholder="8 أحرف على الأقل" dir="ltr">
+        <button class="toggle-eye" onclick="togglePasswordVis('new-password-input', this)" type="button">👁</button>
+      </div>
+    </div>
+    <div class="auth-field">
+      <label>تأكيد كلمة المرور الجديدة</label>
+      <div class="password-wrapper">
+        <input type="password" id="confirm-new-password-input" placeholder="أعد الإدخال" dir="ltr">
+        <button class="toggle-eye" onclick="togglePasswordVis('confirm-new-password-input', this)" type="button">👁</button>
+      </div>
+    </div>
+    <div class="auth-error" id="change-pass-error"></div>
+    <button class="auth-btn primary" id="change-pass-btn" onclick="handleChangePassword()">
+      <span class="btn-text">تغيير كلمة المرور</span>
+      <span class="btn-loader" style="display:none">⏳</span>
+    </button>
+  </div>
+</div>
+<!-- ========================= -->
+
+<!-- Firebase SDK -->
+<!-- Firebase Compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<!-- Auth System -->
+<script src="js/auth.js"></script>
+<script src="js/script.js"></script>
+<script src="js/memorize.js"></script>
+<script src="js/features.js"></script>
+
+  <!-- ═══════════════ TAFSIR MODAL ═══════════════ -->
+  <div class="tafsir-modal-overlay" id="tafsir-modal-overlay" onclick="closeTafsirModal(event)">
+    <div class="tafsir-modal" id="tafsir-modal" role="dialog" aria-modal="true" dir="rtl">
+      <!-- Handle bar (mobile) -->
+      <div class="tafsir-modal-handle"></div>
+
+      <!-- Header -->
+      <div class="tafsir-modal-header">
+        <div class="tafsir-modal-meta">
+          <span class="tafsir-modal-badge" id="tm-badge">التفسير</span>
+          <span class="tafsir-modal-ref" id="tm-ref"></span>
+        </div>
+        <button class="tafsir-modal-close" onclick="closeTafsirModal()" aria-label="إغلاق">✕</button>
+      </div>
+
+      <!-- Verse text -->
+      <div class="tafsir-modal-verse" id="tm-verse"></div>
+
+      <!-- Source switcher inside modal -->
+      <div class="tafsir-modal-sources">
+        <button class="tm-src-btn active" data-src="ar.waseet" data-label="التفسير الوسيط" onclick="switchModalTafsir(this)">الوسيط</button>
+        <button class="tm-src-btn" data-src="ar.muyassar" data-label="التفسير الميسر" onclick="switchModalTafsir(this)">الميسر</button>
+        <button class="tm-src-btn" data-src="ar.jalalayn" data-label="الجلالين" onclick="switchModalTafsir(this)">الجلالين</button>
+      </div>
+
+      <!-- Tafsir body -->
+      <div class="tafsir-modal-body" id="tm-body">
+        <div class="tafsir-spinner" id="tm-spinner">
+          <div class="tm-spin-ring"></div>
+          <p>جارٍ تحميل التفسير...</p>
+        </div>
+        <div class="tafsir-modal-text" id="tm-text"></div>
+        <div class="tafsir-modal-error" id="tm-error" style="display:none">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p>حدث خطأ أثناء تحميل التفسير</p>
+          <button onclick="retryTafsir()">إعادة المحاولة</button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="tafsir-modal-actions">
+        <button class="tm-action-btn" onclick="copyTafsir()" id="tm-copy-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          نسخ التفسير
+        </button>
+        <button class="tm-action-btn" onclick="shareTafsir()" id="tm-share-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          مشاركة
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- ===== FLOATING AI CHAT ===== -->
+<div class="fab-ai-container" id="fab-ai-container">
+  <!-- Chat Window -->
+  <div class="fab-chat-window" id="fab-chat-window">
+    <div class="fab-chat-header">
+      <div class="fab-chat-header-left">
+        <div class="fab-chat-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="3"/><circle cx="9" cy="12" r="1.2" fill="currentColor"/><circle cx="15" cy="12" r="1.2" fill="currentColor"/><path d="M12 3v3M8 18l-1 2M16 18l1 2"/></svg>
+        </div>
+        <div>
+          <div class="fab-chat-title">المساعد القرآني الذكي</div>
+          <div class="fab-chat-status"><span class="fab-status-dot"></span>متصل الآن</div>
+        </div>
+      </div>
+      <button class="fab-chat-close" onclick="toggleFabChat()" aria-label="إغلاق">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="fab-chat-messages" id="fab-chat-messages">
+      <div class="fab-msg bot">
+        <div class="fab-msg-avatar bot">☾</div>
+        <div class="fab-msg-bubble">
+          السلام عليكم 🌙<br>
+          أنا مساعدك القرآني. اسألني عن أي آية أو موضوع في القرآن الكريم.
+        </div>
+      </div>
+    </div>
+
+    <div class="fab-chat-suggestions" id="fab-suggestions">
+      <button class="fab-sug" onclick="fabAskAI('ما فضل سورة الإخلاص؟')">فضل سورة الإخلاص</button>
+      <button class="fab-sug" onclick="fabAskAI('ما معنى آية الكرسي؟')">معنى آية الكرسي</button>
+      <button class="fab-sug" onclick="fabAskAI('آيات عن الصبر')">آيات عن الصبر</button>
+    </div>
+
+    <div class="fab-chat-input-row">
+      <input type="text" id="fab-ai-input" placeholder="اكتب سؤالك..." onkeydown="if(event.key==='Enter')fabSendAI()" />
+      <button class="fab-send-btn" onclick="fabSendAI()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating Button -->
+  <button class="fab-ai-btn" id="fab-ai-btn" onclick="toggleFabChat()" aria-label="فتح المساعد الذكي">
+    <div class="fab-icon fab-icon-open">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="3"/><circle cx="9" cy="12" r="1.2" fill="currentColor"/><circle cx="15" cy="12" r="1.2" fill="currentColor"/><path d="M12 3v3M8 18l-1 2M16 18l1 2"/></svg>
+    </div>
+    <div class="fab-icon fab-icon-close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </div>
+    <div class="fab-pulse"></div>
+  </button>
+</div>
+
+<style>
+/* side-ai-tab removed */
+
+/* ===== FAB AI FLOATING BUTTON ===== */
+.fab-ai-container {
+  position: fixed;
+  bottom: 16px !important;
+  left: 16px !important;
+  right: auto !important;
+  top: auto !important;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  pointer-events: none;
+}
+
+/* FAB smooth show/hide */
+.fab-ai-btn {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, opacity 0.3s ease !important;
+}
+.fab-ai-btn.fab-hidden {
+  opacity: 0 !important;
+  transform: scale(0) !important;
+  pointer-events: none !important;
+}
+
+/* Floating Button */
+.fab-ai-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #B6923A;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  pointer-events: auto;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(182, 146, 58, 0.6), 0 0 0 0 rgba(182, 146, 58, 0.4);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  position: relative;
+  overflow: visible;
+  animation: fabBounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes fabBounceIn {
+  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.fab-ai-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(182, 146, 58, 0.8), 0 0 0 0 rgba(182, 146, 58, 0.4);
+}
+
+.fab-ai-btn:active {
+  transform: scale(0.95);
+}
+
+.fab-ai-btn.is-open {
+  background: #8f7028;
+}
+
+.fab-icon {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  color: #fff;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.fab-icon-close {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+.fab-ai-btn.is-open .fab-icon-open {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+.fab-ai-btn.is-open .fab-icon-close {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Pulse animation */
+.fab-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(182, 146, 58, 0.35);
+  animation: fabPulse 2.5s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fabPulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(1.7); opacity: 0; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+.fab-ai-btn.is-open .fab-pulse {
+  animation: none;
+  opacity: 0;
+}
+
+/* Chat Window */
+.fab-chat-window {
+  width: 320px;
+  background: var(--bg-card, #141e35);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,201,122,0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.85) translateY(20px);
+  transform-origin: bottom left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, visibility 0.25s ease;
+  max-height: 480px;
+}
+
+.fab-chat-window.is-open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Header */
+.fab-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.25) 0%, rgba(232,201,122,0.15) 100%);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  flex-shrink: 0;
+}
+
+.fab-chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fab-chat-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #c9a84c, #e8c97a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fab-chat-avatar svg {
+  width: 20px;
+  height: 20px;
+  color: #fff;
+}
+
+.fab-chat-title {
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary, #e8e4d8);
+  direction: rtl;
+}
+
+.fab-chat-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 11px;
+  color: var(--text-muted, #8899aa);
+  direction: rtl;
+}
+
+.fab-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.fab-chat-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.07);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, #8899aa);
+  transition: background 0.2s, color 0.2s;
+}
+
+.fab-chat-close:hover {
+  background: rgba(255,255,255,0.13);
+  color: var(--text-primary, #e8e4d8);
+}
+
+.fab-chat-close svg { width: 15px; height: 15px; }
+
+/* Messages */
+.fab-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 200px;
+  max-height: 240px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201,168,76,0.3) transparent;
+}
+
+.fab-chat-messages::-webkit-scrollbar { width: 3px; }
+.fab-chat-messages::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.4); border-radius: 2px; }
+
+.fab-msg {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  animation: fabMsgIn 0.3s ease both;
+}
+
+@keyframes fabMsgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fab-msg.user { flex-direction: row-reverse; }
+
+.fab-msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.fab-msg-avatar.bot { background: linear-gradient(135deg, var(--gold, #c9a84c), var(--gold-light, #e8c97a)); }
+.fab-msg-avatar.user-av { background: linear-gradient(135deg, #c9a84c, #e8c97a); color: white; }
+
+.fab-msg-bubble {
+  background: var(--bg-secondary, #1a2540);
+  border: 1px solid var(--border, #1e2d4a);
+  border-radius: 12px 12px 12px 4px;
+  padding: 9px 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--text-primary, #e8e4d8);
+  max-width: 78%;
+  direction: rtl;
+  text-align: right;
+}
+
+.fab-msg.user .fab-msg-bubble {
+  background: rgba(201,168,76,0.15);
+  border-color: rgba(201,168,76,0.35);
+  border-radius: 12px 12px 4px 12px;
+}
+
+/* Suggestions */
+.fab-chat-suggestions {
+  padding: 6px 12px 10px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.fab-sug {
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 20px;
+  padding: 5px 11px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 11px;
+  color: var(--text-primary, #e8e4d8);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  direction: rtl;
+  white-space: nowrap;
+}
+
+.fab-sug:hover {
+  background: rgba(201,168,76,0.25);
+  border-color: rgba(201,168,76,0.6);
+  transform: scale(1.03);
+}
+
+/* Input Row */
+.fab-chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px 14px;
+  border-top: 1px solid rgba(201,168,76,0.15);
+  flex-shrink: 0;
+}
+
+.fab-chat-input-row input {
+  flex: 1;
+  background: var(--bg-secondary, #1a2540);
+  border: 1px solid var(--border, #1e2d4a);
+  color: var(--text-primary, #e8e4d8);
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 12.5px;
+  direction: rtl;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.fab-chat-input-row input:focus {
+  border-color: rgba(201,168,76,0.6);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+}
+
+.fab-chat-input-row input::placeholder {
+  color: var(--text-muted, #8899aa);
+}
+
+.fab-send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #c9a84c, #e8c97a);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 10px rgba(201,168,76,0.4);
+}
+
+.fab-send-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(201,168,76,0.6);
+}
+
+.fab-send-btn:active { transform: scale(0.94); }
+.fab-send-btn svg { width: 16px; height: 16px; }
+
+/* Typing indicator */
+.fab-typing {
+  display: flex;
+  gap: 4px;
+  padding: 6px 4px;
+  align-items: center;
+}
+.fab-typing span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.7);
+  animation: fabTyping 1.2s ease-in-out infinite;
+}
+.fab-typing span:nth-child(2) { animation-delay: 0.2s; }
+.fab-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes fabTyping {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Mobile adjustments */
+/* ===== FAB AI — تجنّب التداخل مع شريط التشغيل ===== */
+/* عندما يكون شريط التشغيل ظاهراً نرفع زر الـ AI فوقه */
+body.player-active .fab-ai-container {
+  bottom: 96px !important;
+}
+body.player-active .fab-chat-window {
+  max-height: calc(100vh - 180px);
+}
+
+@media (max-width: 768px) {
+  .fab-ai-container { bottom: 14px !important; left: 12px !important; right: auto !important; top: auto !important; align-items: flex-end; gap: 10px; }
+  .fab-ai-btn { width: 58px; height: 58px; }
+  .fab-icon svg { width: 26px; height: 26px; }
+  .fab-chat-window { width: calc(100vw - 24px); max-width: 340px; max-height: 70vh; }
+  body.player-active .fab-ai-container { bottom: 148px !important; }
+  body.player-active .fab-chat-window { max-height: calc(100vh - 220px); }
+}
+
+@media (max-width: 480px) {
+  .fab-ai-btn { width: 58px; height: 58px; }
+  .fab-icon svg { width: 26px; height: 26px; }
+  .fab-chat-window { width: calc(100vw - 20px); }
+  body.player-active .fab-ai-container { bottom: 148px !important; }
+}
+
+/* FAB hidden state handled via .fab-hidden class on .fab-ai-btn */
+
+/* Extra safety: use :has() for browsers that support it */
+@media (max-width: 720px) {
+  body:has(.audio-player.visible) .fab-ai-container { bottom: 148px !important; }
+  body:has(.audio-player.visible) .fab-chat-window { max-height: calc(100vh - 220px); }
+}
+
+@media (min-width: 721px) {
+  body:has(.audio-player.visible) .fab-ai-container { bottom: 104px !important; }
+}
+</style>
+
+<script>
+// ===== FAB AI CHAT =====
+let fabChatOpen = false;
+
+function toggleFabChat() {
+  fabChatOpen = !fabChatOpen;
+  const btn = document.getElementById('fab-ai-btn');
+  const win = document.getElementById('fab-chat-window');
+  btn.classList.toggle('is-open', fabChatOpen);
+  win.classList.toggle('is-open', fabChatOpen);
+  if (fabChatOpen) {
+    setTimeout(() => document.getElementById('fab-ai-input')?.focus(), 350);
+  }
+}
+
+async function fabSendAI() {
+  const input = document.getElementById('fab-ai-input');
+  const q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  fabAskAI(q);
+}
+
+async function fabAskAI(question) {
+  const msgs = document.getElementById('fab-chat-messages');
+  // Hide suggestions after first question
+  const suggs = document.getElementById('fab-suggestions');
+  if (suggs) suggs.style.display = 'none';
+
+  // User message
+  msgs.innerHTML += `<div class="fab-msg user"><div class="fab-msg-avatar user-av">👤</div><div class="fab-msg-bubble">${question}</div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Typing indicator
+  const typId = 'fab-typ-' + Date.now();
+  msgs.innerHTML += `<div class="fab-msg" id="${typId}"><div class="fab-msg-avatar bot">☾</div><div class="fab-msg-bubble"><div class="fab-typing"><span></span><span></span><span></span></div></div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const res = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    document.getElementById(typId)?.remove();
+    const answer = (res.ok && data?.answer) ? data.answer : buildLocalAIAnswer(question);
+    msgs.innerHTML += `<div class="fab-msg"><div class="fab-msg-avatar bot">☾</div><div class="fab-msg-bubble">${answer.replace(/\n/g,'<br>')}</div></div>`;
+  } catch (e) {
+    document.getElementById(typId)?.remove();
+    const answer = buildLocalAIAnswer(question);
+    msgs.innerHTML += `<div class="fab-msg"><div class="fab-msg-avatar bot">☾</div><div class="fab-msg-bubble">${answer}</div></div>`;
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+}
+</script>
+
+<!-- ============== RADIO (Quran Cairo) ============== -->
+<script>
+(function(){
+  // Cairo Quran Radio + related Egyptian Quran streams (HTTPS via radio.mp3quran.net)
+  var STATIONS = [
+    { id: 'cairo', name: 'إذاعة القرآن الكريم — القاهرة', sub: 'البث الرسمي • جمهورية مصر العربية', url: 'https://stream.radiojar.com/8s5u5tpdtwzuv' },
+    { id: 'makkah', name: 'مكة المكرمة', sub: 'البث المباشر من الحرم المكي', url: 'https://Qurango.net/radio/salma' },
+    { id: 'madinah', name: 'المدينة المنورة', sub: 'البث المباشر من الحرم النبوي', url: 'https://Qurango.net/radio/abdulrahman_alsudaes' }
+  ];
+
+  var state = { idx: 0, playing: false, lastVol: 80, muted: false };
+  function $(id){ return document.getElementById(id); }
+
+  function renderStations(){
+    var grid = $('radio-station-grid'); if(!grid) return;
+    grid.innerHTML = STATIONS.map(function(s,i){
+      return '<button type="button" class="radio-station-card '+(i===state.idx?'active':'')+'" data-i="'+i+'">' +
+               '<div class="rsc-icon">📻</div>' +
+               '<div class="rsc-text"><div class="rsc-name">'+s.name+'</div><div class="rsc-sub">'+s.sub+'</div></div>' +
+             '</button>';
+    }).join('');
+    Array.prototype.forEach.call(grid.querySelectorAll('.radio-station-card'), function(btn){
+      btn.addEventListener('click', function(){ selectStation(parseInt(btn.dataset.i,10)); });
+    });
+  }
+
+  function updateUI(){
+    var s = STATIONS[state.idx];
+    var name = $('radio-station-name'); if(name) name.textContent = s.name;
+    var sub  = $('radio-station-sub');  if(sub)  sub.textContent  = s.sub;
+    var icon = $('radio-toggle-icon');  if(icon) icon.textContent = state.playing ? '⏸' : '▶';
+    var live = $('radio-live-text');    if(live) live.textContent = state.playing ? 'مباشر الآن' : 'غير متصل';
+    var badge= $('radio-live-badge');   if(badge) badge.classList.toggle('on', state.playing);
+    var cover= $('radio-cover-inner');  if(cover) cover.classList.toggle('spinning', state.playing);
+    var btn  = $('radio-toggle-btn');   if(btn)  btn.classList.toggle('playing', state.playing);
+    Array.prototype.forEach.call(document.querySelectorAll('.radio-station-card'), function(b){
+      b.classList.toggle('active', parseInt(b.dataset.i,10) === state.idx);
+    });
+  }
+
+  function setStatus(t){ var el=$('radio-status'); if(el) el.textContent = t; }
+
+  window.selectStation = function(i){
+    if(i===state.idx) return;
+    state.idx = i;
+    var a = $('radio-audio'); if(!a) return;
+    var wasPlaying = state.playing;
+    a.pause();
+    a.src = STATIONS[i].url;
+    if(wasPlaying){
+      setStatus('جارٍ الاتصال بـ ' + STATIONS[i].name + '...');
+      a.play().catch(function(e){ state.playing=false; updateUI(); setStatus('تعذّر تشغيل المحطة. حاول مرة أخرى.'); });
+    } else {
+      setStatus('جاهز — اضغط زر التشغيل');
+    }
+    updateUI();
+  };
+
+  window.toggleRadio = function(){
+    var a = $('radio-audio'); if(!a) return;
+    if(state.playing){
+      a.pause();
+      state.playing = false;
+      setStatus('تم الإيقاف');
+      updateUI();
+      return;
+    }
+    if(!a.src) a.src = STATIONS[state.idx].url;
+    setStatus('جارٍ الاتصال بالبث المباشر...');
+    var p = a.play();
+    if(p && p.then){
+      p.then(function(){ state.playing=true; setStatus('🔴 مباشر — ' + STATIONS[state.idx].name); updateUI(); })
+       .catch(function(){ state.playing=false; setStatus('تعذّر تشغيل البث. تحقق من الاتصال بالإنترنت ثم حاول مجدداً.'); updateUI(); });
+    } else {
+      state.playing = true; setStatus('🔴 مباشر'); updateUI();
+    }
+  };
+
+  window.setRadioVolume = function(v){
+    var a = $('radio-audio'); if(!a) return;
+    var n = Math.max(0, Math.min(100, parseInt(v,10)||0));
+    a.volume = n/100;
+    state.lastVol = n || state.lastVol;
+    state.muted = (n===0);
+    var lab = $('radio-vol-value'); if(lab) lab.textContent = n + '%';
+    var mb = $('radio-mute-btn');   if(mb)  mb.textContent = n===0 ? '🔇' : (n<40 ? '🔉' : '🔊');
+  };
+
+  window.toggleRadioMute = function(){
+    var sl = $('radio-volume'); if(!sl) return;
+    if(state.muted){ sl.value = state.lastVol||80; setRadioVolume(sl.value); }
+    else { state.lastVol = parseInt(sl.value,10)||80; sl.value = 0; setRadioVolume(0); }
+  };
+
+  function init(){
+    if(document.getElementById('radio-station-grid') && !document.getElementById('radio-station-grid').dataset.ready){
+      document.getElementById('radio-station-grid').dataset.ready = '1';
+      renderStations();
+      var a = $('radio-audio');
+      if(a){
+        a.addEventListener('playing', function(){ state.playing=true; setStatus('🔴 مباشر — ' + STATIONS[state.idx].name); updateUI(); });
+        a.addEventListener('pause',   function(){ state.playing=false; updateUI(); });
+        a.addEventListener('error',   function(){ state.playing=false; setStatus('حدث خطأ في البث. جرّب محطة أخرى.'); updateUI(); });
+        a.addEventListener('waiting', function(){ setStatus('جارٍ التحميل...'); });
+        a.volume = 0.8;
+      }
+      updateUI();
+    }
+  }
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+</script>
+
+</body>
+</html>
