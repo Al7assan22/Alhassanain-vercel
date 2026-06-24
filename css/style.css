@@ -3290,6 +3290,7 @@ input:focus, textarea:focus, select:focus {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
+  color: var(--text-primary);
 }
 .prayer-card {
   background: var(--bg-card);
@@ -4086,7 +4087,7 @@ input::placeholder { color: var(--text-muted); }
 .prayer-card.next { background: var(--gradient-gold); color: #1a1408; border-color: transparent; box-shadow: 0 14px 36px -14px rgba(212,178,90,0.6); }
 .prayer-card.next * { color: #1a1408 !important; }
 .prayer-next-card { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: var(--radius-lg); padding: 28px; text-align: center; box-shadow: var(--shadow-elegant); margin-bottom: 22px; }
-.prayer-date-bar { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 14px 22px; margin-bottom: 18px; text-align: center; color: var(--text-secondary); font-weight: 600; box-shadow: var(--shadow-soft); }
+.prayer-date-bar { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 14px 22px; margin-bottom: 18px; text-align: center; color: var(--text-primary); font-weight: 600; box-shadow: var(--shadow-soft); }
 
 /* ===== AI Chat ===== */
 .ai-chat { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-soft); }
