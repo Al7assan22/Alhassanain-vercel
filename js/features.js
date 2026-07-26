@@ -311,9 +311,135 @@
     });
   }
 
+  /* ===================== 6) Islamic Occasions Countdown ===================== */
+  // Reuses the accurate Umm al-Qura converter from section 2 above.
+  const OCCASIONS = [
+    { m:9,  d:1,  label:'رمضان',        icon:'🌙' },
+    { m:10, d:1,  label:'عيد الفطر',     icon:'🎉' },
+    { m:12, d:9,  label:'يوم عرفة',      icon:'🕋' },
+    { m:12, d:10, label:'عيد الأضحى',    icon:'🐑' },
+    { m:1,  d:10, label:'عاشوراء',       icon:'📿' },
+    { m:1,  d:1,  label:'رأس السنة الهجرية', icon:'🌕' },
+  ];
+
+  function findNextOccasion(){
+    const today = new Date(); today.setHours(0,0,0,0);
+    let best = null;
+    for (const occ of OCCASIONS){
+      // Walk forward day by day (max 400 days covers a full hijri year + buffer)
+      for (let i=0;i<400;i++){
+        const d = new Date(today); d.setDate(d.getDate()+i);
+        const h = toHijriAccurate(d) || toHijriFallback(d);
+        if (h.m === occ.m && h.d === occ.d){
+          if (i>0 || (h.m && i===0)){
+            if (!best || i < best.daysLeft){ best = { ...occ, date:d, daysLeft:i }; }
+          }
+          break;
+        }
+      }
+    }
+    return best;
+  }
+
+  function mountOccasionCountdown(){
+    const home = document.getElementById('screen-home');
+    const hijriInner = document.getElementById('hijri-pill-mount');
+    if (!home || !hijriInner || document.getElementById('occasion-pill-mount')) return;
+    const next = findNextOccasion();
+    if (!next) return;
+    const hijriWrap = hijriInner.parentElement; // the outer <div style="text-align:center"> from mountHijriPill
+    const wrap = document.createElement('div');
+    wrap.style.textAlign = 'center';
+    const daysTxt = next.daysLeft === 0 ? 'اليوم' : `بعد ${next.daysLeft} يوم`;
+    wrap.innerHTML = `<div id="occasion-pill-mount" class="occasion-pill">
+      <span class="hp-ico">${next.icon}</span>
+      <span>${next.label}</span>
+      <span class="occ-days">${daysTxt}</span>
+    </div>`;
+    hijriWrap.parentElement.insertBefore(wrap, hijriWrap.nextSibling);
+  }
+
+  /* ===================== 7) Khatma / Reading Progress Widget ===================== */
+  const KHATMA_TOTAL_PAGES = 604;
+
+  function getKhatmaState(){
+    const currentPage = parseInt(localStorage.getItem('mshf_page')||'1',10);
+    const goalDays = parseInt(localStorage.getItem('khatma_goal_days')||'0',10);
+    const startPage = parseInt(localStorage.getItem('khatma_start_page')||'1',10);
+    const startDate = localStorage.getItem('khatma_start_date');
+    return { currentPage, goalDays, startPage, startDate };
+  }
+
+  function setKhatmaGoal(days){
+    localStorage.setItem('khatma_goal_days', String(days));
+    localStorage.setItem('khatma_start_page', String(parseInt(localStorage.getItem('mshf_page')||'1',10)));
+    localStorage.setItem('khatma_start_date', new Date().toISOString());
+    renderKhatmaWidget();
+  }
+
+  window.mshfSetKhatmaGoal = function(){
+    const val = prompt('في كام يوم عايز تختم القرآن؟', '30');
+    const days = parseInt(val,10);
+    if (days && days > 0) setKhatmaGoal(days);
+  };
+
+  function renderKhatmaWidget(){
+    const box = document.getElementById('khatma-widget');
+    if (!box) return;
+    const st = getKhatmaState();
+    const pct = Math.min(100, Math.round((st.currentPage / KHATMA_TOTAL_PAGES) * 100));
+
+    let goalHtml = '';
+    if (st.goalDays > 0){
+      const pagesTotal = KHATMA_TOTAL_PAGES - st.startPage;
+      const perDay = Math.max(1, Math.ceil(pagesTotal / st.goalDays));
+      const daysPassed = st.startDate ? Math.floor((Date.now() - new Date(st.startDate).getTime())/86400000) : 0;
+      const expectedPage = Math.min(KHATMA_TOTAL_PAGES, st.startPage + perDay*daysPassed);
+      const onTrack = st.currentPage >= expectedPage;
+      goalHtml = `<div class="khatma-goal ${onTrack?'on-track':'behind'}">
+        📖 ${perDay} صفحة/يوم عشان تختم في ${st.goalDays} يوم${onTrack ? ' — ماشي تمام 👏' : ' — حاول تلحّق 💪'}
+      </div>`;
+    } else {
+      goalHtml = `<button class="khatma-set-goal" onclick="mshfSetKhatmaGoal()">🎯 حدد هدف ختمة</button>`;
+    }
+
+    box.innerHTML = `
+      <div class="khatma-head">
+        <span>📗 تقدّمك في القرآن</span>
+        <span class="khatma-pct">${pct}%</span>
+      </div>
+      <div class="khatma-bar"><div class="khatma-bar-fill" style="width:${pct}%"></div></div>
+      <div class="khatma-sub">صفحة ${st.currentPage} من ${KHATMA_TOTAL_PAGES}</div>
+      ${goalHtml}
+    `;
+  }
+
+  function mountKhatmaWidget(){
+    const home = document.getElementById('screen-home');
+    if (!home || document.getElementById('khatma-widget')) return;
+    const occInner = document.getElementById('occasion-pill-mount');
+    const hijriInner = document.getElementById('hijri-pill-mount');
+    const anchorInner = occInner || hijriInner;
+    const anchorWrap = anchorInner ? anchorInner.parentElement : home.firstElementChild;
+    const box = document.createElement('div');
+    box.id = 'khatma-widget';
+    box.className = 'khatma-widget';
+    if (anchorWrap && anchorWrap.parentElement){
+      anchorWrap.parentElement.insertBefore(box, anchorWrap.nextSibling);
+    } else {
+      home.appendChild(box);
+    }
+    renderKhatmaWidget();
+    // Keep it fresh if the user reads and comes back to home without a reload
+    window.addEventListener('storage', (e) => { if (e.key === 'mshf_page') renderKhatmaWidget(); });
+    setInterval(renderKhatmaWidget, 5000);
+  }
+
   /* ===================== Boot ===================== */
   function boot(){
     mountHijriPill();
+    mountOccasionCountdown();
+    mountKhatmaWidget();
     injectShareButton();
     setupMediaSession();
     // Re-run when audio elements appear later
