@@ -1,5 +1,5 @@
 /* Al-Hassanein Service Worker — Offline cache */
-const CACHE = 'hassanein-v1';
+const CACHE = 'hassanein-v2';
 const CORE = [
   '/', '/index.html',
   '/css/style.css', '/css/auth.css', '/css/memorize.css', '/css/features.css',
