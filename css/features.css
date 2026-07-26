@@ -12,6 +12,13 @@
 .hijri-pill .hp-ico{font-size:18px}
 .hijri-pill .hp-greg{opacity:.7;font-size:12px;margin-inline-start:6px}
 
+[data-theme="light"] .hijri-pill{
+  background:linear-gradient(135deg,rgba(80,130,220,.10),rgba(140,100,220,.08));
+  border:1px solid rgba(0,0,0,.08);
+  color:#2b4a8a;
+}
+[data-theme="light"] .hijri-pill .hp-greg{color:#5a6b8c;opacity:.85}
+
 /* ===== QIBLA SCREEN ===== */
 .qibla-wrap{max-width:520px;margin:24px auto;padding:18px;text-align:center}
 .qibla-card{
