@@ -59,8 +59,10 @@
   }
 
   /* ===================== 2) Hijri Date ===================== */
-  // Simple Umm al-Qura approximation (Kuwaiti algorithm)
-  function toHijri(date){
+  // Arithmetic fallback (Kuwaiti algorithm) — only used if the browser lacks
+  // built-in Umm al-Qura support. This algorithm drifts 1-3 days from the
+  // official Umm al-Qura calendar, so it's a last resort, not the default.
+  function toHijriFallback(date){
     const jd = Math.floor((date.getTime()/86400000) + 2440587.5);
     const l = jd - 1948440 + 10632;
     const n = Math.floor((l - 1) / 10631);
@@ -75,9 +77,23 @@
   const HIJRI_MONTHS = ['محرّم','صفر','ربيع الأول','ربيع الآخر','جمادى الأولى','جمادى الآخرة','رجب','شعبان','رمضان','شوّال','ذو القعدة','ذو الحجة'];
   const AR_DAYS = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 
+  // Uses the browser's built-in Umm al-Qura calendar (ICU), which matches the
+  // official Saudi calendar far more closely than a fixed arithmetic formula.
+  function toHijriAccurate(date){
+    try{
+      const parts = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+        day:'numeric', month:'numeric', year:'numeric'
+      }).formatToParts(date);
+      const get = (t) => Number(parts.find(p => p.type === t)?.value);
+      const y = get('year'), m = get('month'), d = get('day');
+      if (!y || !m || !d) return null;
+      return { y, m, d };
+    }catch(e){ return null; }
+  }
+
   window.formatHijriToday = function(){
     const now = new Date();
-    const h = toHijri(now);
+    const h = toHijriAccurate(now) || toHijriFallback(now);
     const day = AR_DAYS[now.getDay()];
     const greg = now.toLocaleDateString('ar-EG',{ day:'numeric', month:'long', year:'numeric' });
     return { text: `${day} ${h.d} ${HIJRI_MONTHS[h.m-1]} ${h.y} هـ`, greg };
