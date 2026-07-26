@@ -19,6 +19,46 @@
 }
 [data-theme="light"] .hijri-pill .hp-greg{color:#5a6b8c;opacity:.85}
 
+/* Islamic occasions countdown pill */
+.occasion-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 16px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(201,168,76,.14),rgba(201,168,76,.06));
+  border:1px solid rgba(201,168,76,.25);
+  color:#f0d9a0;font-weight:600;font-size:13px;
+  margin:6px auto 10px;
+}
+.occasion-pill .occ-days{opacity:.8;font-size:12px;margin-inline-start:4px}
+[data-theme="light"] .occasion-pill{
+  background:linear-gradient(135deg,rgba(154,111,26,.10),rgba(154,111,26,.05));
+  border:1px solid rgba(154,111,26,.25);
+  color:#7a5a10;
+}
+
+/* Khatma / reading progress widget */
+.khatma-widget{
+  max-width:420px;margin:10px auto 16px;padding:14px 18px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);
+}
+.khatma-head{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;color:#cfe2ff;margin-bottom:8px}
+.khatma-pct{color:#9fd7a0;font-weight:700}
+.khatma-bar{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:8px}
+.khatma-bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#9fd7a0,#c9a84c);transition:width .4s ease}
+.khatma-sub{font-size:12px;opacity:.7;margin-bottom:8px;color:#cfe2ff}
+.khatma-goal{font-size:12px;padding:8px 10px;border-radius:10px;background:rgba(201,168,76,.10);color:#f0d9a0}
+.khatma-goal.behind{background:rgba(220,90,90,.10);color:#ffb3b3}
+.khatma-set-goal{
+  width:100%;padding:8px 10px;border-radius:10px;border:1px dashed rgba(201,168,76,.4);
+  background:transparent;color:#f0d9a0;font-size:12px;font-weight:600;cursor:pointer;
+}
+.khatma-set-goal:hover{background:rgba(201,168,76,.08)}
+[data-theme="light"] .khatma-widget{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08)}
+[data-theme="light"] .khatma-head,[data-theme="light"] .khatma-sub{color:#2b4a8a}
+[data-theme="light"] .khatma-goal{background:rgba(154,111,26,.10);color:#7a5a10}
+[data-theme="light"] .khatma-goal.behind{background:rgba(200,60,60,.10);color:#a83232}
+[data-theme="light"] .khatma-set-goal{color:#7a5a10;border-color:rgba(154,111,26,.35)}
+
 /* ===== QIBLA SCREEN ===== */
 .qibla-wrap{max-width:520px;margin:24px auto;padding:18px;text-align:center}
 .qibla-card{
