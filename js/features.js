@@ -435,6 +435,61 @@
     setInterval(renderKhatmaWidget, 5000);
   }
 
+  /* ===================== 8) Offline Mushaf Download ===================== */
+  const MUSHAF_TOTAL_PAGES = 604;
+  const MUSHAF_API = (p) =>
+    `https://api.quran.com/api/v4/verses/by_page/${p}?fields=text_uthmani,verse_key,chapter_id,page_number,juz_number,hizb_number&per_page=300`;
+
+  let offlineDownloadRunning = false;
+
+  window.mshfDownloadOffline = async function(){
+    if (offlineDownloadRunning) return;
+    if (!('serviceWorker' in navigator)){
+      window.miniToast && miniToast('المتصفح ده مش بيدعم التخزين الأوفلاين', 2500);
+      return;
+    }
+    offlineDownloadRunning = true;
+    const btn = document.getElementById('mshf-offline-btn');
+    const originalLabel = btn ? btn.textContent : '';
+    if (btn) btn.disabled = true;
+
+    const CONCURRENCY = 6;
+    let done = 0, failed = 0;
+    let nextPage = 1;
+
+    async function worker(){
+      while (true){
+        const p = nextPage++;
+        if (p > MUSHAF_TOTAL_PAGES) return;
+        try {
+          const r = await fetch(MUSHAF_API(p));
+          if (!r.ok) throw new Error('http '+r.status);
+          await r.blob(); // ensure body is consumed so SW finishes caching it
+          done++;
+        } catch(e){
+          failed++;
+        }
+        if (btn && (done + failed) % 5 === 0){
+          btn.textContent = `⬇️ جاري التنزيل... ${done + failed}/${MUSHAF_TOTAL_PAGES}`;
+        }
+      }
+    }
+
+    await Promise.all(Array.from({length: CONCURRENCY}, worker));
+
+    if (btn){
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
+    offlineDownloadRunning = false;
+    window.miniToast && miniToast(
+      failed === 0
+        ? `✅ اتحمّل المصحف كامل للأوفلاين (${done}/${MUSHAF_TOTAL_PAGES})`
+        : `⚠️ اتحمّل ${done} صفحة، وفشل ${failed} — جرّب تاني وانت متصل`,
+      3200
+    );
+  };
+
   /* ===================== Boot ===================== */
   function boot(){
     mountHijriPill();
