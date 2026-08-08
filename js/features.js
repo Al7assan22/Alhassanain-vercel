@@ -438,8 +438,6 @@
   /* ===================== Boot ===================== */
   function boot(){
     mountHijriPill();
-    mountOccasionCountdown();
-    mountKhatmaWidget();
     injectShareButton();
     setupMediaSession();
     // Re-run when audio elements appear later
