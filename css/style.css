@@ -1255,11 +1255,11 @@ main { flex: 1; padding: 24px 20px; max-width: 1200px; margin: 0 auto; width: 10
   margin: 0 2px;
   vertical-align: middle;
 }
-.mshf-wrap.night-mode .mshf-page-box { background: #1a1612; }
-.mshf-wrap.night-mode .mshf-text-page { color: #e8d9b8; }
+.mshf-wrap.night-mode .mshf-page-box { background: linear-gradient(160deg, #0f1629 0%, #0a0f1a 100%); box-shadow: inset 0 0 0 1px rgba(201,168,76,0.16), 0 0 40px rgba(26,159,143,0.06); }
+.mshf-wrap.night-mode .mshf-text-page { color: #e8e4d8; }
 .mshf-wrap.night-mode .mshf-surah-banner { background: linear-gradient(135deg,rgba(212,175,55,0.18),rgba(212,175,55,0.05)); border-color: rgba(212,175,55,0.5); color:#f0d98a; }
 .mshf-wrap.night-mode .mshf-bismillah { color:#f0d98a; }
-.mshf-wrap.night-mode .mshf-verse:hover { background: rgba(212,175,55,0.18); }
+.mshf-wrap.night-mode .mshf-verse:hover { background: rgba(26,159,143,0.16); }
 .mshf-wrap.sepia-mode .mshf-page-box { background: #f0e4cc; }
 .mshf-wrap.sepia-mode .mshf-text-page { color: #4a3508; }
 
@@ -1281,7 +1281,7 @@ main { flex: 1; padding: 24px 20px; max-width: 1200px; margin: 0 auto; width: 10
 .mshf-pi-surah { font-weight: 700; font-size: 1.05em; color: #9a6f1a; }
 .mshf-pi-item  { font-weight: 500; }
 .mshf-pi-sep   { opacity: 0.5; }
-.mshf-wrap.night-mode .mshf-page-info { background: rgba(212,175,55,0.10); border-color: rgba(212,175,55,0.35); color:#e8d9b8; }
+.mshf-wrap.night-mode .mshf-page-info { background: rgba(26,159,143,0.10); border-color: rgba(201,168,76,0.30); color:#e8e4d8; }
 .mshf-wrap.night-mode .mshf-pi-surah  { color:#f0d98a; }
 .mshf-wrap.sepia-mode .mshf-page-info { background: rgba(154,111,26,0.12); }
 
@@ -2537,7 +2537,7 @@ main { flex: 1; padding: 24px 20px; max-width: 1200px; margin: 0 auto; width: 10
   padding: 10px;
   box-shadow: inset 0 0 0 1px rgba(154,111,26,0.16);
 }
-.mshf-wrap.night-mode .mshf-page-box-dual { background: #1a1612; }
+.mshf-wrap.night-mode .mshf-page-box-dual { background: linear-gradient(160deg, #0f1629 0%, #0a0f1a 100%); }
 .mshf-wrap.sepia-mode .mshf-page-box-dual { background: #f0e4cc; }
 @media (max-width: 768px) {
   .mshf-book-wrap.dual-mode .mshf-page-box,
