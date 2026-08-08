@@ -8,7 +8,7 @@
  *    and this SW's fetch handler caches each response.
  * ========================================================= */
 
-const SW_VERSION   = 'v1';
+const SW_VERSION   = 'v2';
 const SHELL_CACHE   = `hassanain-shell-${SW_VERSION}`;
 const PAGES_CACHE    = `hassanain-mushaf-pages-${SW_VERSION}`;
 
