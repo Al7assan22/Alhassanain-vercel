@@ -32,6 +32,13 @@
       "auth/popup-closed-by-user":   "",
       "auth/popup-blocked":          "تم حجب النافذة المنبثقة. سيتم التحويل لصفحة Google.",
       "auth/requires-recent-login":  "أعد تسجيل الدخول لإجراء هذه العملية.",
+      "auth/account-exists-with-different-credential": "هذا البريد مسجّل بطريقة أخرى. سجّل الدخول بالبريد وكلمة المرور.",
+      "auth/unauthorized-domain":    "هذا الدومين غير مصرّح له بتسجيل الدخول عبر Google.",
+      "auth/operation-not-allowed":  "تسجيل الدخول عبر Google غير مفعّل في المشروع.",
+      "auth/cancelled-popup-request": "",
+      "auth/operation-not-supported-in-this-environment": "تسجيل الدخول بـ Google غير مدعوم في هذا المتصفح. افتح الموقع في Chrome أو Safari.",
+      "auth/web-storage-unsupported": "المتصفح يمنع التخزين. فعّل الكوكيز ثم أعد المحاولة.",
+      "auth/internal-error":         "حدث خطأ داخلي. أعد المحاولة.",
     };
     return map[code] || ("حدث خطأ: " + code);
   }
@@ -116,15 +123,13 @@
   // ── Handle Google Redirect Result on page load ───────────────────────────
   auth.getRedirectResult().then(function(result) {
     if (result && result.user) {
-      updateUserUI(result.user);
-      var name = result.user.displayName || result.user.email.split("@")[0];
-      showToast("أهلاً " + name + "! تم الدخول بـ Google ✓", "success");
+      var isNew = !!(result.additionalUserInfo && result.additionalUserInfo.isNewUser);
+      onGoogleSuccess(result.user, isNew);
     }
   }).catch(function(err) {
     // Suppress environment errors (e.g. running from file:// locally)
     var silentCodes = [
       "auth/popup-closed-by-user",
-      "auth/operation-not-supported-in-this-environment",
       "auth/unauthorized-domain"
     ];
     if (err.code && silentCodes.indexOf(err.code) === -1) {
@@ -316,25 +321,83 @@
   };
 
   // ── GOOGLE LOGIN ──────────────────────────────────────────────────────────
-  // Uses Redirect (more reliable than Popup on hosted sites like Netlify)
+  // Popup أولاً، وإذا حُجبت النافذة نستخدم Redirect.
+  // إغلاق المستخدم للنافذة بنفسه لا يُعتبر خطأ ولا يُحوَّل إلى Redirect.
+  var googleBusy = false;
+
+  // يحفظ البريد في قاعدة البيانات (مثل التسجيل العادي) ولا يمسّ بيانات المستخدم القديمة
+  function saveGoogleUser(user) {
+    if (!db || !user || !user.email) return;
+    var safeKey = user.email.replace(/\./g, ',');
+    db.ref('emails/' + safeKey).set(true).catch(function(){});
+    db.ref('users/' + user.uid + '/email').once('value').then(function(s) {
+      if (!s.exists()) db.ref('users/' + user.uid).update({ email: user.email }).catch(function(){});
+    }).catch(function(){});
+  }
+
+  function onGoogleSuccess(user, isNew) {
+    saveGoogleUser(user);
+    updateUserUI(user);
+    window.closeAuthModal();
+    var name = getFirstName(user.displayName || user.email.split("@")[0]);
+    showToast(
+      isNew ? ("أهلاً " + name + "! تم إنشاء حسابك بـ Google 🌟")
+            : ("أهلاً " + name + "! تم الدخول بـ Google ✓"),
+      "success"
+    );
+  }
+
+  // يكتشف المتصفحات المدمجة في التطبيقات (فيسبوك، إنستجرام، واتساب...) التي ترفض Google
+  function isInAppBrowser() {
+    var ua = navigator.userAgent || "";
+    return /FBAN|FBAV|FB_IAB|Instagram|Line\/|WhatsApp|Snapchat|TikTok|musical_ly|Twitter|LinkedInApp|MicroMessenger|; wv\)/i.test(ua);
+  }
+
+  function googleUnsupportedMsg() {
+    return "تسجيل الدخول بـ Google غير مدعوم داخل هذا المتصفح. افتح الموقع في Chrome أو Safari ثم أعد المحاولة.";
+  }
+
+  function showGoogleError(msg) {
+    if (!msg) return;
+    showError("login-error", msg);
+    showError("signup-error", msg);
+    showToast(msg, "error");
+  }
+
   window.handleGoogleLogin = function() {
-    // Try popup first; if blocked fall back to redirect
+    if (googleBusy) return;
+
+    // البروتوكول لازم http/https (ليس file://)
+    if (location.protocol !== "http:" && location.protocol !== "https:") {
+      showGoogleError("افتح الموقع عبر رابط (https) وليس كملف محلي، لأن Google لا يعمل من file://");
+      return;
+    }
+    if (isInAppBrowser()) {
+      showGoogleError(googleUnsupportedMsg());
+      return;
+    }
+
+    googleBusy = true;
     auth.signInWithPopup(googleProvider)
-      .then(function(cred) {
-        updateUserUI(cred.user);
-        window.closeAuthModal();
-        var name = cred.user.displayName || cred.user.email.split("@")[0];
-        showToast("أهلاً " + name + "! تم الدخول بـ Google ✓", "success");
+      .then(function(result) {
+        var isNew = !!(result.additionalUserInfo && result.additionalUserInfo.isNewUser);
+        onGoogleSuccess(result.user, isNew);
       })
       .catch(function(err) {
-        if (err.code === "auth/popup-blocked" || err.code === "auth/popup-closed-by-user") {
-          // Fallback to redirect
-          auth.signInWithRedirect(googleProvider);
-        } else {
-          var msg = mapError(err.code);
-          if (msg) showToast(msg, "error");
+        // النافذة محجوبة أو البيئة لا تدعم Popup → نجرّب Redirect
+        if (err.code === "auth/popup-blocked" ||
+            err.code === "auth/operation-not-supported-in-this-environment") {
+          return auth.signInWithRedirect(googleProvider).catch(function(err2) {
+            showGoogleError(
+              err2.code === "auth/operation-not-supported-in-this-environment"
+                ? googleUnsupportedMsg()
+                : mapError(err2.code)
+            );
+          });
         }
-      });
+        showGoogleError(mapError(err.code));
+      })
+      .finally(function() { googleBusy = false; });
   };
 
   // ── FORGOT PASSWORD ───────────────────────────────────────────────────────
@@ -432,6 +495,11 @@
   // ── CHANGE PASSWORD ───────────────────────────────────────────────────────
   window.openChangePassword = function() {
     closeDropdown();
+    var cu = auth.currentUser;
+    if (cu && !(cu.providerData || []).some(function(p) { return p.providerId === "password"; })) {
+      showToast("حسابك مرتبط بـ Google ولا يستخدم كلمة مرور.", "info");
+      return;
+    }
     clearMsg("change-pass-error");
     ["current-password-input","new-password-input","confirm-new-password-input"].forEach(function(id) {
       var el = $(id); if (el) el.value = "";
