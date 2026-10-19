@@ -523,3 +523,18 @@
   .auth-login-btn span { display: none; }
   .auth-login-btn { padding: 7px 10px; }
 }
+
+/* ===== Optional login prompt + guest mode ===== */
+.auth-skip{
+  display:block; width:100%; margin-top:6px; padding:10px; background:transparent; border:0; cursor:pointer;
+  font-family:inherit; font-size:13px; font-weight:700; color:var(--text-muted,#8a93a6); transition:color .2s;
+}
+.auth-skip:hover{ color:var(--gold,#c9a84c); }
+/* الإحصائيات تظهر للمسجّلين فقط */
+html:not(.is-auth) #home-stats-row,
+html:not(.is-auth) .streak-bar,
+html:not(.is-auth) .memo-stats{ display:none !important; }
+html:not(.is-auth) #stats-login-nudge,
+html:not(.is-auth) #memo-login-nudge{ display:flex !important; }
+html.is-auth #stats-login-nudge,
+html.is-auth #memo-login-nudge{ display:none !important; }
