@@ -36,6 +36,7 @@
 <link rel="stylesheet" href="css/auth.css">
 <link rel="stylesheet" href="css/memorize.css">
 <link rel="stylesheet" href="css/features.css">
+<link rel="stylesheet" href="css/pages.css">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0b1220">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -442,21 +443,41 @@
 
   <!-- PRAYER TIMES SCREEN -->
   <div class="screen" id="screen-prayer">
-    <div class="screen-header">
-      <div class="screen-title">🕌 أوقات الصلاة</div>
-      <button class="goal-btn" style="width:auto;padding:9px 18px" onclick="detectLocation()">📍 تحديد الموقع</button>
+    <div class="pg-hero">
+      <div class="pg-badge">🕌 مواقيت الصلاة</div>
+      <h1>أوقات الصلاة</h1>
+      <p id="pg-prayer-sub">جارٍ تحميل التاريخ...</p>
+      <div class="pg-hero-meta"><span class="pg-chip" id="pg-prayer-city">📍 ...</span></div>
     </div>
-    <div id="prayer-location-info" style="text-align:center;color:var(--text-muted);font-size:13px;margin-bottom:18px"></div>
-    <div id="prayer-error" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:16px;text-align:center;color:#ef4444;margin-bottom:18px"></div>
-    <div id="prayer-loading" style="text-align:center;padding:40px;color:var(--text-muted)"><div class="spinner" style="margin:0 auto 14px"></div>جارٍ تحديد موقعك...</div>
-    <div id="prayer-content" style="display:none">
-      <div class="prayer-date-bar" id="prayer-date-bar"></div>
-      <div class="prayer-grid" id="prayer-grid"></div>
-      <div class="prayer-next-card" id="prayer-next-card"></div>
-      <div style="margin-top:24px">
-        <div class="screen-title" style="font-size:16px;margin-bottom:14px">📅 أوقات الأيام القادمة</div>
-        <div id="prayer-week-grid"></div>
-      </div>
+    <div class="pg-toolbar">
+      <button class="pg-btn primary" onclick="detectLocation()">📍 تحديد موقعي بدقة</button>
+    </div>
+    <div class="pg-state" id="pg-prayer-state"></div>
+    <div id="pg-prayer-body" style="display:none">
+      <div class="pg-next" id="pg-next"></div>
+      <div class="pg-times" id="pg-times"></div>
+      <div class="pg-card"><h3>📅 الأيام القادمة</h3><div class="pg-week" id="pg-week"></div></div>
+      <details class="pg-card pg-settings">
+        <summary>⚙️ إعدادات الحساب والمدينة</summary>
+        <div class="pg-settings-grid">
+          <div class="pg-field"><label>مدينة أخرى</label>
+            <div class="row"><input class="pg-input" id="pg-city-q" placeholder="مثال: الإسكندرية" onkeydown="if(event.key==='Enter')pgCitySearch()"><button class="pg-btn sm" onclick="pgCitySearch()">بحث</button></div></div>
+          <div class="pg-field"><label>طريقة الحساب</label>
+            <select class="pg-select" id="pg-method-sel" onchange="pgSetMethod(this.value)">
+              <option value="auto">تلقائي حسب بلدك (موصى به)</option>
+              <option value="5">الهيئة المصرية العامة للمساحة</option><option value="4">أم القرى — مكة المكرمة</option>
+              <option value="3">رابطة العالم الإسلامي</option><option value="9">الكويت</option><option value="10">قطر</option>
+              <option value="16">دبي</option><option value="13">تركيا</option><option value="21">المغرب</option>
+              <option value="19">الجزائر</option><option value="18">تونس</option><option value="23">الأردن</option>
+              <option value="2">أمريكا الشمالية (ISNA)</option><option value="1">كراتشي</option>
+            </select></div>
+          <div class="pg-field"><label>وقت العصر</label>
+            <select class="pg-select" id="pg-school-sel" onchange="pgSetSchool(this.value)">
+              <option value="0">مذهب الجمهور (الشافعي/المالكي/الحنبلي)</option><option value="1">المذهب الحنفي</option>
+            </select></div>
+        </div>
+      </details>
+      <p class="pg-note" id="pg-method-note"></p>
     </div>
   </div>
 
@@ -505,23 +526,24 @@
 
 
 
-  <!-- AZKAR SCREEN - FULL COMPREHENSIVE VERSION -->
+  <!-- AZKAR SCREEN -->
   <div class="screen" id="screen-azkar">
-    <div class="screen-header">
-      <div class="screen-title">🌅 أذكار الصباح والمساء</div>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <button class="goal-btn" style="width:auto;padding:8px 14px;background:rgba(201,168,76,0.12);border:1px solid var(--border-gold);color:var(--gold)" onclick="mshfAzkarResetAll()">🔄 إعادة الكل</button>
-        <div style="font-size:12px;color:var(--text-muted);font-family:'Cairo',sans-serif" id="azkar-done-label"></div>
-      </div>
+    <div class="pg-hero">
+      <div class="pg-badge">🌅 حصن المسلم</div>
+      <h1>أذكار الصباح والمساء</h1>
+      <p id="pg-az-sub"></p>
     </div>
-    <div class="azkar-tabs">
-      <button class="azkar-tab active" id="azkar-tab-morning" onclick="renderAzkar('morning')">☀️ أذكار الصباح</button>
-      <button class="azkar-tab" id="azkar-tab-evening" onclick="renderAzkar('evening')">🌙 أذكار المساء</button>
+    <div class="pg-seg">
+      <button class="active" id="azkar-tab-morning" onclick="renderAzkar('morning')">☀️ أذكار الصباح</button>
+      <button id="azkar-tab-evening" onclick="renderAzkar('evening')">🌙 أذكار المساء</button>
     </div>
-    <div class="content-grid" id="azkar-grid"></div>
+    <div class="pg-progress">
+      <span class="lbl" id="pg-az-lbl"></span>
+      <div class="bar"><i id="pg-az-bar"></i></div>
+      <button class="pg-btn sm" onclick="mshfAzkarResetAll()">🔄 إعادة الكل</button>
+    </div>
+    <div class="pg-list" id="azkar-grid"></div>
   </div>
-
-
 
   <!-- TASBIH SCREEN -->
   <div class="screen" id="screen-tasbih">
@@ -566,11 +588,14 @@
 
   <!-- QURANIC DUAS SCREEN -->
   <div class="screen" id="screen-quran-duas">
-    <div class="screen-header">
-      <div class="screen-title">📜 الأدعية الواردة في القرآن الكريم</div>
+    <div class="pg-hero">
+      <div class="pg-badge">📜 كنوز الدعاء</div>
+      <h1>أدعية القرآن الكريم</h1>
+      <p>الأدعية التي وردت في كتاب الله، مع ذكر السورة ورقم الآية.</p>
     </div>
-    <p style="color:var(--text-muted);margin-bottom:18px;font-size:14px">جميع الأدعية التي وردت في كتاب الله، مع ذكر السورة ورقم الآية.</p>
-    <div class="content-grid" id="quran-duas-grid"></div>
+    <div class="pg-search"><span>🔍</span><input class="pg-input" type="search" placeholder="ابحث في الأدعية..." oninput="duaSearch(this.value)"></div>
+    <div class="pg-filters"><span class="pg-chip" id="pg-du-count"></span><button class="pg-chip" onclick="duaOnlyFav(this)">★ المفضلة فقط</button></div>
+    <div class="pg-list" id="quran-duas-grid"></div>
   </div>
 
 
@@ -627,35 +652,41 @@
 
   <!-- ============ QIBLA SCREEN ============ -->
   <div class="screen" id="screen-qibla">
-    <div class="screen-header">
-      <div class="screen-title">🧭 اتجاه القبلة</div>
+    <div class="pg-hero">
+      <div class="pg-badge">🕋 نحو بيت الله الحرام</div>
+      <h1>اتجاه القبلة</h1>
+      <p>حدّد موقعك وفعّل البوصلة، وحرّك هاتفك حتى يستقر السهم الذهبي أعلى القرص.</p>
+      <div class="pg-hero-meta"><span class="pg-chip" id="qb-city">📍 لم يُحدَّد الموقع بعد</span></div>
     </div>
-    <div class="qibla-wrap">
-      <div class="qibla-card">
-        <div class="qibla-compass">
-          <div class="qibla-mark n">ش</div>
-          <div class="qibla-mark s">ج</div>
-          <div class="qibla-mark e">شر</div>
-          <div class="qibla-mark w">غ</div>
-          <div class="qibla-rose" id="qibla-rose">
-            <div class="qibla-needle"></div>
-            <div class="qibla-kaaba" title="الكعبة المشرّفة">🕋</div>
+    <div class="qb">
+      <div class="qb-card qb-dial-card">
+        <div class="qb-dial" id="qb-dial"></div>
+        <div class="qb-turn" id="qb-turn">—</div>
+        <div class="qb-status" id="qb-status">اضغط «تحديد موقعي» للبدء.</div>
+      </div>
+      <div class="qb-side">
+        <div class="qb-stats">
+          <div class="qb-stat"><small>زاوية القبلة من الشمال</small><b id="qb-angle">—</b></div>
+          <div class="qb-stat"><small>اتجاه هاتفك الآن</small><b id="qb-head">—</b></div>
+          <div class="qb-stat"><small>المسافة إلى مكة</small><b id="qb-dist">—</b></div>
+          <div class="qb-stat"><small>دقة الموقع</small><b id="qb-acc">—</b></div>
+        </div>
+        <div class="pg-card">
+          <div class="qb-actions">
+            <button class="pg-btn primary" onclick="qiblaRequestLocation()">📍 تحديد موقعي</button>
+            <button class="pg-btn" id="qb-compass-btn" onclick="qiblaEnableCompass()">🧭 تفعيل البوصلة</button>
           </div>
-          <div class="qibla-center"></div>
+          <div class="pg-field" style="margin-top:14px"><label>أو ابحث عن مدينة</label>
+            <div class="row"><input class="pg-input" id="qb-city-q" placeholder="مثال: طنطا" onkeydown="if(event.key==='Enter')qiblaCity()"><button class="pg-btn sm" onclick="qiblaCity()">بحث</button></div></div>
         </div>
-        <div class="qibla-info">
-          الزاوية إلى القبلة: <b id="qibla-angle">—</b>
-          <div style="margin-top:4px;opacity:.8;font-size:14px">المسافة إلى مكة: <span id="qibla-dist">—</span></div>
-        </div>
-        <div class="qibla-actions">
-          <button class="qibla-btn" onclick="qiblaRequestLocation()">📍 تحديد موقعي</button>
-          <button class="qibla-btn ghost" onclick="qiblaEnableCompass()">🧭 تفعيل البوصلة</button>
-        </div>
-        <div class="qibla-status" id="qibla-status">اضغط "تحديد موقعي" ثم "تفعيل البوصلة" (مطلوب على الهواتف).</div>
-        <div style="margin-top:14px;font-size:13px;color:#9fb3d1;line-height:1.8">
-          • السهم الذهبي يشير إلى الكعبة المشرّفة 🕋<br>
-          • وجّه أعلى الجهاز ناحية السهم لتجد القبلة.<br>
-          • للحصول على دقة أعلى استخدم الجهاز في مكان مكشوف.
+        <div class="pg-card qb-tips">
+          <h3>💡 لدقة أفضل</h3>
+          <ul>
+            <li>أمسك الهاتف أفقيًا ومستويًا وبعيدًا عن المعادن والمغناطيس.</li>
+            <li>لو القراءة مضطربة، حرّك الهاتف على شكل رقم ٨ لمعايرة البوصلة.</li>
+            <li>البوصلة تعتمد على الشمال المغناطيسي، وفرقه عن الجغرافي في مصر نحو ٥° فقط.</li>
+            <li>على الكمبيوتر لا توجد بوصلة: استخدم زاوية القبلة المعروضة مع بوصلة حقيقية.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -663,13 +694,17 @@
 
   <!-- ============ MEMORIZE SCREEN ============ -->
   <div class="screen" id="screen-memorize">
-    <div class="memo-hero">
-      <div class="memo-hero-badge">🧠 ميزة التحفيظ الجديدة</div>
+    <div class="pg-hero">
+      <div class="pg-badge">🧠 ميزة التحفيظ الجديدة</div>
       <h1>احفظ القرآن الكريم بطريقة منظمة</h1>
       <p>اختر السورة والآيات، استمع، كرّر، اختبر نفسك، وتابع تقدّمك خطوة بخطوة بإذن الله.</p>
     </div>
 
     <!-- Top stats -->
+    <div class="stats-login-nudge" id="memo-login-nudge" style="display:none">
+      <span>🔒</span> سجّل دخولك لتظهر إحصائيات حفظك
+      <button onclick="openAuthModal('login')">دخول</button>
+    </div>
     <div class="memo-stats">
       <div class="memo-stat"><div class="ms-num" id="memo-stat-verses">0</div><div class="ms-label">آية محفوظة</div></div>
       <div class="memo-stat"><div class="ms-num" id="memo-stat-surahs">0</div><div class="ms-label">سورة مكتملة</div></div>
@@ -972,6 +1007,7 @@
         <span class="btn-loader" style="display:none">⏳</span>
       </button>
       <p class="auth-switch">ليس لديك حساب؟ <button onclick="switchPanel('signup')">إنشاء حساب</button></p>
+      <button type="button" class="auth-skip" onclick="closeAuthModal()">تخطي — تصفّح كزائر</button>
     </div>
 
     <!-- SIGNUP PANEL -->
@@ -1020,6 +1056,7 @@
         <span class="btn-loader" style="display:none">⏳</span>
       </button>
       <p class="auth-switch">لديك حساب بالفعل؟ <button onclick="switchPanel('login')">تسجيل الدخول</button></p>
+      <button type="button" class="auth-skip" onclick="closeAuthModal()">تخطي — تصفّح كزائر</button>
     </div>
 
     <!-- FORGOT PASSWORD PANEL -->
@@ -1106,6 +1143,7 @@
 <script src="js/script.js"></script>
 <script src="js/memorize.js"></script>
 <script src="js/features.js"></script>
+<script src="js/pages.js"></script>
 
   <!-- ═══════════════ TAFSIR MODAL ═══════════════ -->
   <div class="tafsir-modal-overlay" id="tafsir-modal-overlay" onclick="closeTafsirModal(event)">
