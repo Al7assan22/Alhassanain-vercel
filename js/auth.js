@@ -15,6 +15,8 @@
 
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   var auth = firebase.auth();
+  // الجلسة تبقى محفوظة على الجهاز: من سجّل مرة لا يُطلب منه الدخول ثانيةً
+  try { auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function(){}); } catch (e) {}
   var googleProvider = new firebase.auth.GoogleAuthProvider();
   googleProvider.setCustomParameters({ prompt: "select_account" });
 
@@ -411,23 +413,38 @@
 
     setLoading("forgot-submit-btn", true);
 
-    // Send reset email directly — Firebase rejects automatically if email not found
-    auth.sendPasswordResetEmail(email)
-      .then(function() {
-        showSuccess("forgot-success",
-          "✅ إذا كان بريدك الإلكتروني مسجلاً في المنصة، فقد تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك.\n" +
-          "📩 يرجى التحقق من صندوق الوارد (Inbox) أو مجلد البريد غير المرغوب (Spam)."
-        );
-        $("forgot-email").value = "";
+    var NOT_FOUND = "❌ هذا البريد الإلكتروني غير مسجّل في المنصة. تأكد من كتابته بشكل صحيح أو أنشئ حساباً جديداً.";
+    var SENT = "✅ تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك.\n📩 يرجى التحقق من صندوق الوارد (Inbox) أو مجلد البريد غير المرغوب (Spam).";
+
+    // 1) فحص وجود الإيميل في قاعدة المستخدمين (Firebase Admin عبر /api/check-email)
+    var ctl = (typeof AbortController !== "undefined") ? new AbortController() : null;
+    var to = setTimeout(function() { if (ctl) ctl.abort(); }, 8000);
+    fetch("/api/check-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email }),
+      signal: ctl ? ctl.signal : undefined
+    })
+      .then(function(r) { return r.json(); })
+      .catch(function() { return null; })          // الخدمة غير متاحة → نعتمد على رد Firebase
+      .then(function(res) {
+        clearTimeout(to);
+        if (res && res.exists === false && !res.error) {
+          showError("forgot-error", NOT_FOUND);
+          return;
+        }
+        // 2) الإيميل موجود → أرسل رابط الاسترداد
+        return auth.sendPasswordResetEmail(email)
+          .then(function() {
+            showSuccess("forgot-success", SENT);
+            $("forgot-email").value = "";
+          })
+          .catch(function(err) {
+            if (err && err.code === "auth/user-not-found") showError("forgot-error", NOT_FOUND);
+            else showError("forgot-error", mapError(err && err.code));
+          });
       })
-      .catch(function(err) {
-        showSuccess("forgot-success",
-          "✅ إذا كان بريدك الإلكتروني مسجلاً في المنصة، فقد تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك.\n" +
-          "📩 يرجى التحقق من صندوق الوارد (Inbox) أو مجلد البريد غير المرغوب (Spam)."
-        );
-        $("forgot-email").value = "";
-      })
-      .finally(function() { setLoading("forgot-submit-btn", false); });
+      .then(function() { setLoading("forgot-submit-btn", false); });
   };
 
   // ── LOGOUT ────────────────────────────────────────────────────────────────
@@ -597,10 +614,27 @@
     db.ref('users/' + user.uid).update(update).catch(function() {});
   };
 
+
+  // ── Login prompt (اختياري): يظهر مرة لكل جلسة لغير المسجّلين ويمكن تخطيه ──
+  var htmlEl = document.documentElement;
+  function promptLoginOnce() {
+    try { if (sessionStorage.getItem("auth_prompted")) return; sessionStorage.setItem("auth_prompted", "1"); } catch (e) {}
+    var tries = 0;
+    (function waitSplash() {           // انتظر اختفاء شاشة البداية أولًا
+      var sp = $("splash-screen");
+      if ((sp && !sp.classList.contains("hide") && tries++ < 40)) return setTimeout(waitSplash, 200);
+      setTimeout(function() { if (!auth.currentUser) window.openAuthModal("login"); }, 350);
+    })();
+  }
+
   // When auth state changes, sync user data
   auth.onAuthStateChanged(function(user) {
     window.__userLoggedIn__ = !!user;
     updateUserUI(user);
+    htmlEl.classList.toggle("is-auth", !!user);
+    if (user) { var ov = $("auth-overlay"); if (ov && ov.classList.contains("open")) window.closeAuthModal(); }
+    else promptLoginOnce();
+    if (typeof window.updateHomeLabels === "function") { try { window.updateHomeLabels(); } catch (e) {} }
     if (user) {
       loadUserData(user.uid);
       // Auto-migrate: save email to users node + emails index (covers old users)
