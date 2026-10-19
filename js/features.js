@@ -26,35 +26,57 @@
   }
 
   let deferredPrompt = null;
+  const PWA_KEY = 'pwa-install-dismissed-at';
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    showInstallToast();
+    scheduleInstallBanner(6000);
   });
+  window.addEventListener('appinstalled', () => { deferredPrompt = null; hideInstallBanner(); });
 
-  function showInstallToast(){
-    if (document.getElementById('pwa-install-toast')) return;
-    if (localStorage.getItem('pwa-install-dismissed')) return;
+  // يظهر بعد ٦ ثوانٍ، لا يزاحم نافذة الدخول، ولا يتكرر قبل ٧ أيام من إغلاقه
+  function scheduleInstallBanner(delay){
+    setTimeout(() => {
+      const last = +localStorage.getItem(PWA_KEY) || 0;
+      if (Date.now() - last < 7 * 864e5) return;
+      const ov = document.getElementById('auth-overlay');
+      if (ov && ov.classList.contains('open')) return scheduleInstallBanner(5000);
+      showInstallBanner();
+    }, delay);
+  }
+  function hideInstallBanner(){
+    const el = document.getElementById('pwa-install-toast');
+    if (!el) return;
+    el.classList.remove('show'); setTimeout(() => el.remove(), 450);
+  }
+  function showInstallBanner(){
+    if (!deferredPrompt || document.getElementById('pwa-install-toast')) return;
     const el = document.createElement('div');
     el.id = 'pwa-install-toast';
     el.className = 'pwa-install-toast';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-label', 'تثبيت التطبيق');
     el.innerHTML = `
-      <span>📲 ثبّت تطبيق الحَسَنَيْن على جهازك</span>
-      <button class="pi-yes">تثبيت</button>
-      <button class="pi-no">لاحقاً</button>`;
+      <img class="pi-icon" src="assets/apple-touch-icon.png" alt="" width="48" height="48">
+      <div class="pi-text">
+        <strong>ثبّت منصة الحَسَنَيْن</strong>
+        <span>وصول أسرع من شاشتك الرئيسية، وتعمل بدون إنترنت</span>
+      </div>
+      <button class="pi-yes" type="button">تثبيت</button>
+      <button class="pi-no" type="button" aria-label="إغلاق">✕</button>`;
     document.body.appendChild(el);
-    requestAnimationFrame(()=>el.classList.add('show'));
+    requestAnimationFrame(() => el.classList.add('show'));
     el.querySelector('.pi-yes').onclick = async () => {
       if (deferredPrompt){
         deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
+        try { await deferredPrompt.userChoice; } catch(e){}
         deferredPrompt = null;
       }
-      el.classList.remove('show'); setTimeout(()=>el.remove(),400);
+      hideInstallBanner();
     };
     el.querySelector('.pi-no').onclick = () => {
-      localStorage.setItem('pwa-install-dismissed','1');
-      el.classList.remove('show'); setTimeout(()=>el.remove(),400);
+      localStorage.setItem(PWA_KEY, String(Date.now()));
+      hideInstallBanner();
     };
   }
 
